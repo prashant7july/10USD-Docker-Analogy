@@ -2,7 +2,7 @@
 
 ## Table of Contents
 * Dependency Manager for PHP (https://getcomposer.org/)
-  * [Without Docker](https://github.com/prashant7july/docker/tree/master/PHP%20Package%20Manager%20without%20Docker)
-  * [Use Docker Hub](https://github.com/prashant7july/docker/tree/master/php-package-manager-from-docker-hub-or-registry)
-  * [Use Dockerfile](https://github.com/prashant7july/docker/tree/master/PHP%20Package%20Manager%20with%20Dockerfile)
-  * [Use docker-composer.yml](https://github.com/prashant7july/docker)
+  * [Without Docker](https://github.com/prashant7july/10USD-Docker-Analogy/tree/master/Without%20Docker)
+  * [Use Docker Hub](https://github.com/prashant7july/10USD-Docker-Analogy/tree/master/Use%20Docker%20Hub%20OR%20Registry)
+  * [Use Dockerfile](https://github.com/prashant7july/10USD-Docker-Analogy/tree/master/Use%20Dockerfile)
+  * [Use docker-composer.yml](https://github.com/prashant7july/10USD-Docker-Analogy/tree/master/Docker%20Compose)
