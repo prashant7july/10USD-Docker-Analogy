@@ -195,3 +195,4 @@ $ docker rm --force $(docker ps -qa)
 ```
 docker exec -i dump mysql -uroot -proot < dump.sql
 ```
+Note that the -i option allows to use input redirection from the host right into the docker container.
