@@ -158,3 +158,35 @@ mysql> use mysql;
 ```
 mysql -u root -p wishfin-2nd < /home/mywish/Downloads/zend_20161207.sql
 ```
+
+## Useful Docker commands
+Used to show all docker's containers by its created column
+```
+$ docker ps -a | grep "weeks ago" | awk '{print $1}'
+```
+
+Showing all containers that matches with Exited Status
+```
+$ docker ps -a | grep "Exited" | awk '{print $4}'
+```
+Note that the bash {print $1} is matched with Status Column
+
+Removing all Exited containers
+```
+$ docker rm ${docker ps -a | grep "Exited" | awk '{print $1}'}
+```
+Printing all containers ids
+```
+$ docker ps -qa
+```
+
+Removing all containers
+```
+$ docker rm $(docker ps -qa)
+```
+Note that if container is running, we can't do that. We got the following message: Conflict, You cannot remove a running container.
+
+Removing all containers ignoring its status and ignoring the error mentioned above
+```
+$ docker rm --force $(docker ps -qa)
+```
