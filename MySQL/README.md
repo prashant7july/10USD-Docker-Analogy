@@ -119,10 +119,22 @@ This will make sure that the data stored in the database is not lost when the im
 ## Shell Access::Starting an Interactive Terminal
 For debugging and maintenance purposes you may want access the containers shell. If you are using docker version 1.3.0 or higher you can access a running containers shell using docker exec command. As indicated in the Dockerfile for the "mysql" Docker image the image is based on the Docker image "debian", which implies that an interactive terminal may be run on the Docker container. Run the following command to start an interactive terminal on the mysql container.
 ``` 
-[sudo] docker exec -it mysql bash
+[sudo] docker exec -it mysql2 bash
 ```
 
 Alternatively, run the same command using the container id.
 ``` 
 [sudo] docker exec –it 77fbe3dc4f6e bash
+```
+
+## Starting MySQL CLI
+Start the MySQL command line interface (CLI) with the following command run in the bash shell.
+``` 
+mysql –u root -p
+```
+## OR
+
+## Shell Access::MySQL CLI
+```
+$ docker exec -it mysql2 mysql -u root -p
 ```
