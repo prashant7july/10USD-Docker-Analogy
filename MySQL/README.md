@@ -190,3 +190,8 @@ Removing all containers ignoring its status and ignoring the error mentioned abo
 ```
 $ docker rm --force $(docker ps -qa)
 ```
+
+# Load the SQL dump
+```
+docker exec -i dump mysql -uroot -proot < dump.sql
+```
