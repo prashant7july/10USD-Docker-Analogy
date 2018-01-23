@@ -39,11 +39,14 @@ mysql> source /schemas/rebuild.sql
 ## [LINK2](https://www.toadworld.com/platforms/oracle/w/wiki/11645.using-mysql-database-with-docker-engine)
 
 ## Running the Docker Image
+```
 $ docker run -p 3306:3306 \
     --name mysql2 \
     -e MYSQL_ROOT_PASSWORD=b3RmELKOvCUrAdxIg0GEmugc3SY \
     -e MYSQL_ROOT_HOST=% \
     -d mysql/mysql-server:latest
+```
+## Output
 ```
 Unable to find image 'mysql/mysql-server:latest' locally
 latest: Pulling from mysql/mysql-server
@@ -65,11 +68,14 @@ $ sudo netstat -nlpt |grep 3306
 ```
 
 ## Again Running the Docker Image
+```
 $ docker run -p 3302:3306 \
     --name mysql2 \
     -e MYSQL_ROOT_PASSWORD=b3RmELKOvCUrAdxIg0GEmugc3SY \
     -e MYSQL_ROOT_HOST=% \
     -d mysql/mysql-server:latest
+```
+## Ouptut
 ```
 latest: Pulling from mysql/mysql-server
 
