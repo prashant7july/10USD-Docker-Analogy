@@ -57,8 +57,9 @@ Status: Downloaded newer image for mysql/mysql-server:latest
 66ff9386311afd4e969d8cf6dabc6305e4236ca3a77980300d30c1cb1aded576
 docker: Error response from daemon: driver failed programming external connectivity on endpoint mysql2 (212d9aedfb9f08da0eab3e870130ba5bbbb37156f86b3b93dd999309a6d4b366): Error starting userland proxy: listen tcp 0.0.0.0:3306: bind: address already in use.
 ```
-## Question - Why?
-Answer - Probably you have already a MySQL service running in port 3306. You should close it first.
+### Question - Why?
+### Answer
+Probably you have already a MySQL service running in port 3306. You should close it first.
 ```
 $ sudo netstat -nlpt |grep 3306
 ```
@@ -97,3 +98,14 @@ User : root
 Port : 3306
 Password : password
 ```
+
+# Data Store
+
+You should mount a volume at /var/lib/mysql.
+```
+$ docker run --name mysql2 -d \
+  -v /opt/mysql/data:/var/lib/mysql \
+  mysql:latest
+```
+
+This will make sure that the data stored in the database is not lost when the image is stopped and started again.
