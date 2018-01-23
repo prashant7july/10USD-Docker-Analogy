@@ -196,3 +196,9 @@ $ docker rm --force $(docker ps -qa)
 docker exec -i dump mysql -uroot -proot < dump.sql
 ```
 Note that the -i option allows to use input redirection from the host right into the docker container.
+
+# Creating database dumps
+Most of the normal tools will work, although their usage might be a little convoluted in some cases to ensure they have access to the mysqld server. A simple way to ensure this is to use docker exec and run the tool from the same container, similar to the following:
+```
+$ docker exec mysql2 sh -c 'exec mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > /some/path/on/your/host/all-databases.sql
+```
