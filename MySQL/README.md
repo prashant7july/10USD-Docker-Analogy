@@ -140,3 +140,21 @@ Enter password: b3RmELKOvCUrAdxIg0GEmugc3SY
 $ docker exec -it mysql2 mysql -u root -p
 Enter password: b3RmELKOvCUrAdxIg0GEmugc3SY
 ```
+
+## Setting the Database
+Before any command may be run in the MySQL CLI a database must be set as the current database. List the databases with the following command.
+```
+mysql> show databases;
+```
+
+In addition to the system, information and performance databases, a user database “mysql” also gets listed.
+
+Set the current database as the “mysql” database.
+```
+mysql> use mysql;
+```
+
+## Import Data
+```
+mysql -u root -p wishfin-2nd < /home/mywish/Downloads/zend_20161207.sql
+```
