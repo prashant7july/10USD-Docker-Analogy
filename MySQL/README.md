@@ -131,10 +131,12 @@ Alternatively, run the same command using the container id.
 Start the MySQL command line interface (CLI) with the following command run in the bash shell.
 ``` 
 mysql -u root -p
+Enter password: b3RmELKOvCUrAdxIg0GEmugc3SY
 ```
 ## OR
 
 ## Shell Access::MySQL CLI
 ```
 $ docker exec -it mysql2 mysql -u root -p
+Enter password: b3RmELKOvCUrAdxIg0GEmugc3SY
 ```
