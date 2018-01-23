@@ -59,7 +59,9 @@ docker: Error response from daemon: driver failed programming external connectiv
 ```
 ## Question - Why?
 Answer - Probably you have already a MySQL service running in port 3306. You should close it first.
+```
 $ sudo netstat -nlpt |grep 3306
+```
 
 ## Again Running the Docker Image
 $ docker run -p 3302:3306 \
