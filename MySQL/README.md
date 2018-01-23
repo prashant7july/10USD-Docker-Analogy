@@ -130,7 +130,7 @@ Alternatively, run the same command using the container id.
 ## Starting MySQL CLI
 Start the MySQL command line interface (CLI) with the following command run in the bash shell.
 ``` 
-mysql –u root -p
+mysql -u root -p
 ```
 ## OR
 
