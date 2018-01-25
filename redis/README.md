@@ -8,16 +8,17 @@
 ### High-availability Redis cluster in Docker
 ## [LINK](https://github.com/AliyunContainerService/redis-cluster)
 ### Redis Cluster with Sentinel by Docker Compose
-[LINK](https://github.com/Zookal/DocHarris)
-[LINK](https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/)
-[LINK](https://github.com/mikechernev/redis-webui)
-[LINKBOOK](https://github.com/mikechernev/programming-ebooks/blob/master/Cheat%20Sheets/Rails.pdf)
-[LINK](https://github.com/webkul/magento2-varnish-redis-ssl-docker-compose)
-[LINK - IMP](https://stackoverflow.com/questions/33304388/calling-redis-cli-in-docker-compose-setup?rq=1)
-[LINK](http://kuga.me/2016/07/22/docker-redis-cluster/)
-[LINK](https://www.snip2code.com/Snippet/1906152/Redis-Cluster-with-Docker-Compose-v3)
-[LINK](https://o-my-chenjian.com/2017/05/24/Deploy-Redis-Cluster-By-Docker/)
-[LINK](https://github.com/vishnudxb/docker-redis-cluster)
+* Reference
+ *[LINK](https://github.com/Zookal/DocHarris)
+ *[LINK](https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/)
+ *[LINK](https://github.com/mikechernev/redis-webui)
+ *[LINKBOOK](https://github.com/mikechernev/programming-ebooks/blob/master/Cheat%20Sheets/Rails.pdf)
+ *[LINK - ubuntu](https://github.com/webkul/magento2-varnish-redis-ssl-docker-compose)
+ *[LINK - IMP](https://stackoverflow.com/questions/33304388/calling-redis-cli-in-docker-compose-setup?rq=1)
+ *[LINK](http://kuga.me/2016/07/22/docker-redis-cluster/)
+ *[LINK](https://www.snip2code.com/Snippet/1906152/Redis-Cluster-with-Docker-Compose-v3)
+ *[LINK](https://o-my-chenjian.com/2017/05/24/Deploy-Redis-Cluster-By-Docker/)
+ *[LINK](https://github.com/vishnudxb/docker-redis-cluster)
 
 
 
