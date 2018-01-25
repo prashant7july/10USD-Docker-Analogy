@@ -89,3 +89,95 @@ try {
     echo $e->getMessage();
 }
 ```
+
+```
+Use Redis
+1 - First make sure you run the Redis Container (redis) with the docker-compose up command.
+docker-compose up -d redis
+To execute redis commands, enter the redis container first docker-compose exec redis bash then enter the redis-cli.
+2 - Open your Laravel’s .env file and set the REDIS_HOST to redis
+REDIS_HOST=redis
+If you’re using Laravel, and you don’t find the REDIS_HOST variable in your .env file. Go to the database configuration file config/database.php and replace the default 127.0.0.1 IP with redis for Redis like this:
+'redis' => [
+    'cluster' => false,
+    'default' => [
+        'host'     => 'redis',
+        'port'     => 6379,
+        'database' => 0,
+    ],
+],
+3 - To enable Redis Caching and/or for Sessions Management. Also from the .env file set CACHE_DRIVER and SESSION_DRIVER to redis instead of the default file.
+CACHE_DRIVER=redis
+SESSION_DRIVER=redis
+4 - Finally make sure you have the predis/predis package (~1.0) installed via Composer:
+composer require predis/predis:^1.0
+5 - You can manually test it from Laravel with this code:
+\Cache::store('redis')->put('Laradock', 'Awesome', 10);
+```
+
+
+```
+
+# https://hub.docker.com/_/php/
+FROM php:5.6-cli
+
+# install php redis extension from source, composer
+RUN apt-get update -q \
+  && apt-get install -y zlib1g-dev \
+  && curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/2.2.7.tar.gz \
+  && tar xfz /tmp/redis.tar.gz \
+  && rm -r /tmp/redis.tar.gz \
+  && mv phpredis-2.2.7 /usr/src/php/ext/redis \
+  && docker-php-ext-install redis zip \
+  && mkdir -p /usr/src/firstapp \
+  && cd /usr/src/firstapp \
+  && curl -sS https://getcomposer.org/installer|php \
+  && apt-get purge -y zlib1g-dev \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /usr/src/firstapp
+
+# use composer to install dependencies
+ADD composer.json /usr/src/firstapp/composer.json
+RUN ./composer.phar install
+
+# copy the rest of the application into the image
+COPY . /usr/src/firstapp
+EXPOSE 80
+ENTRYPOINT ["php", "-S", "0.0.0.0:80", "-t", "web/"]
+
+
+Built
+docker build -t currentweather-php ./
+
+RUN
+docker run --name=currentweather-redis-container -d redis
+
+docker run --link currentweather-redis-container:redis -p 80:80 -ti --rm currentweather-php
+
+
+Testing locally
+
+To test locally before deploying to Giant Swarm, we also need a Redis server. This is very easy to be set up, since we can use a standard image here without any modification. Simply run this to start your local Redis server container:
+
+$ docker run --name=currentweather-redis-container -d redis
+Now let’s start the server container for which we just created the Docker image. Here is the command (replace yourusername with your username):
+
+$ docker run --link currentweather-redis-container:redis -p 80:80 -ti --rm registry.giantswarm.io/yourusername/currentweather-php
+It should be running. But we need proof! Let’s issue an HTTP request.
+
+Accessing the server in a browser requires knowledge of the IP address your docker host binds to containers. This depends on the operating system.
+
+Mac/Windows: with boot2docker you can find it out using boot2docker ip. The default here is 192.168.59.103.
+
+Linux: the command ip addr show docker0|grep inet should print out a line containing the correct address. The default in this case is 172.17.42.1.
+
+So one of the following two commands will likely work:
+
+$ curl 192.168.59.103
+$ curl 172.17.42.1
+Your output should look something like this:
+
+broken clouds, temperature 2 degrees, wind 7.2
+
+```
