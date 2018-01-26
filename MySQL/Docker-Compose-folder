@@ -1,0 +1,144 @@
+The docker-compose.yml file is shown below:
+
+```
+version: '3'
+services:
+  web_server:
+    build:
+      context: ./web_server/
+    container_name: apache2
+    depends_on:
+      - database_server
+    volumes:
+      - ./magento2:/var/www/html  
+      - ./web_server/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./web_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+      - ./web_server/envvars:/etc/apache2/envvars
+    ports:
+      - "80:80"
+    links:
+      - database_server
+ 
+  database_server:
+    build:
+      context: ./database_server/
+      args:
+        - mysql_password=rootpassword123
+    container_name: mysql
+    volumes: 
+      - ./database_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+      - ./database_server/mysql.sh:/etc/mysql.sh
+    ports:
+      - "3306:3306"
+```
+ 
+
+As we can see in docker-compose.yml file above, among various version available, we are using version 3. Here in our configuration file, we are defining two services: web_server and database_server. The web_server is associated with our apache2 server configuration. Container name defined for this service is apache2, linked to database_server and port 80 is allocated to it. There are four volumes or files are being mapped from host to docker container and “context” under “build” points to location of its Dockerfile.
+
+Also, the service database_server is associated with mysql-server. Container name is defined as mysql and port 3306 is allocated to it. Mysql root password will be passed as build argument and their are two volumes/files mapped from host to docker container. Same as web_server, “context” points to location of its Dockerfile.
+
+Lets take a look in our web_server directory. It contains 4 files. Dockerfile is shown below:
+
+database_server
+ Dockerfile
+ mysql.sh
+ supervisord.conf
+
+Moving on to our database_server directory, it contains 3 files. Dockerfile is shown below:
+```
+From ubuntu:14.04
+
+MAINTAINER Alankrit Srivastava alankrit.srivastava256@webkul.com
+ 
+ARG mysql_password
+ 
+##update server
+RUN apt-get update \
+ 
+## Install mysql-server
+&& apt-get -y install debconf-utils \
+&& echo "mysql-server-5.6 mysql-server/root_password password {mysql_password}" | debconf-set-selections \
+&& echo "mysql-server-5.6 mysql-server/root_password_again password ${mysql_password}" | debconf-set-selections \
+&& apt-get install -y mysql-server-5.6 \
+&& sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf \
+ 
+##install supervisor and setup supervisord.conf file
+&& apt-get install -y supervisor \
+&& mkdir -p /var/log/supervisor 
+ 
+CMD ["/usr/bin/supervisord"]
+``` 
+ 
+
+So as we have seen in our last blog as well that Dockerfile just install packages as it is instructed to do by the commands.
+
+As mentioned earlier consider image as rest package where no services or processes are running. That is why we cannot perform any operation from Dockerfile that requires a particular service to be running. As with case of database, we cannot create database from Dockerfile as mysql service is not running. For database and its user creation, we will create a bash script that will run whenever a container will launch, hence creating mentioned database and its user.
+
+We are using “mysql.sh” as the bash script as mentioned in Dockerfile. Bash script “msyql.sh” resides on our host parallel to Dockerfile.
+
+Contents of mysql.sh is shown below:
+
+``` 
+#!/bin/bash
+ 
+database_name=magento_db           ## Mention database name
+database_user=magento_user         ## Mention database user
+database_root_password=rootpassword123    ## Mention mysql root password.
+## Same password must be passed as argument during image build.
+ 
+## Database user password will be randomly generated
+ 
+database_user_password=`date | md5sum | fold -w 12 | head -n 1`
+ 
+## Database user password will be stored in /var/log/check.log ##
+## Remove /var/log/check.log after retrieving password .       ##
+ 
+database_availability_check=`mysqlshow --user=root --password=$database_root_password | grep -o $database_name`
+ 
+if [ "$database_availability_check" == "$database_name" ]; then
+exit 1
+else
+mysql -u root -p$database_root_password -e "create database $database_name;"
+mysql -u root -p$database_root_password -e "grant all on $database_name.* to '$database_user'@'%' identified by '$database_user_password';"
+echo "Your database user "$database_user" password is "$database_user_password"" > /var/log/check.log
+fi
+```
+ 
+
+Apart from mysql.sh and Dockerfile, we are also mapping supervisord.conf file. Its contents are shown below:
+```
+[supervisord]
+nodaemon=true
+ 
+[program:mysql]
+command=/usr/bin/mysqld_safe
+ 
+[program:script_of_user_creation]
+command=/bin/bash -c "chmod a+x /etc/mysql.sh; /etc/mysql.sh"
+```
+
+Make the Start and Build my container
+You have to create the image of my machine to then use it to create the instance. 
+To simplify things I created a script build.sh but you can pretty much type commands directly. Build.sh The script has the following content:
+
+#!/bin/bash
+docker build -t pfay/mysql .
+
+Executed in the folder where is the Dockerfile, the script will take Dockerfile file and create the image "pfay / mysql". 
+After the build, the image is on your PC, you can start a container from the image. 
+For this I created a script that run-server.sh to the following content:
+
+#!/bin/sh
+docker stop mysql
+docker rm mysql
+docker run -d -p 3306:3306 -v /data/mysql:/var/lib/mysql --name mysql pfay/mysql
+
+You might as well throw these commands manually but I find it more convenient. 
+
+What do this script: 
+- He stops and removes the "mysql" instance if it exists. 
+- He then starts with the run command the container he called "mysql" from the image "pfay / mysql" Builde 
+previously. - It states that the container port 3306 is "plugged" on port 3306 from my machine. 
+- It also states that the / var / lib / mysql the container will be "connected" with the / data / mysql my machine. 
+
+[magento-2-docker-compose](https://cloudkul.com/blog/magento-2-docker-compose/)
