@@ -23,3 +23,4 @@ $ docker run --rm -v $(pwd):/app -w /app php:cli php index.php
 ### REFERENCE SITES
 * [docker-any-php-version](https://serversforhackers.com/c/docker-any-php-version)
 * [composer-php-docker](https://www.shiphp.com/blog/2017/composer-php-docker)
+* [php-composer](https://github.com/shipping-docker/php-composer)
