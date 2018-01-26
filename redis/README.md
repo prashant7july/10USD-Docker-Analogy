@@ -246,9 +246,6 @@ With the help of Redis we can perform various operations on sets, strings, hashe
 
 https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/
 
-# Install Different Dockerfile example like MongoDB
-https://github.com/dockerfile
-
 [Install Redis with Docker in Ubuntu 14.04 - IMP](https://gist.github.com/kevingo/6017d641e5492e98bee570b77e2ba258)
 #### 1. Create Docekrfile
 
@@ -328,3 +325,6 @@ docker run --name jenkins -d -p 49001:8080 -v $PWD/jenkins:/var/jenkins_home -t 
 
 # Install RabbitMQ
 [RabbitMQ Dockerfile for trusted automated Docker builds](https://github.com/dockerfile/rabbitmq)
+
+# Install Different Dockerfile example like MongoDB
+https://github.com/dockerfile
