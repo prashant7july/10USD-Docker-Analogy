@@ -182,31 +182,34 @@ Your output should look something like this:
 broken clouds, temperature 2 degrees, wind 7.2
 ```
 
+# PHP with redis
 https://cloudkul.com/blog/redis-introduction-with-php/
 https://redislabs.com/lp/php-redis/
-```
-If you want to explore some basic commands regarding redis, try their interactive tutorial.
 
-Integrating Redis with php using Predis.
-
-Predis is a redis client which is used to integrate the redis with php, to use the predis we have to clone it from its official repository.
-
-git clone git://github.com/nrk/predis.git
-
+#### 1. RUN Composer Command
 Before using Redis with PHP, you will need to install the predis/predis package via Composer:
 
+```
 composer require predis/predis
+```
 
+#### OR 
+Create Composer.json
+
+```
 {
  "require" : {
    "predis/predis" : "1.1.*"
  }
 }
+```
 Alternatively, you may install the PhpRedis PHP extension via PECL.
 
-Connect your php application to Redis
+#### 2. Create predis_example.php file
 
+```
 <?php
+//Connect your php application to Redis
 //check zf2 redis in vender
 require “predis/autoload.php”;
 Predis\Autoloader::register();
@@ -225,17 +228,12 @@ Lets take an example to understand the basic functionality.
 $redis->set (“counter”, 2);
 $redis->incr(“counter”);
 $cvalue->$redis->get(“counter); //cvalue stores the value 3
- 
-#### Create predis_example.php file
-
-```
-// open a connection to Redis
-...
 
 $redis->set("foo", "bar");
 $value = $redis->get("foo");
 var_dump($value);
 ```
+
 #### RUN predis_example.php file
 
 ```
@@ -244,12 +242,11 @@ Connected to Redis
 string(3) "bar"
 ```
 
-
 With the help of Redis we can perform various operations on sets, strings, hashes and lists as well as control the flow of application’s content to make it fast with the help of caching.
-```
+
 https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/
 
-# Install RabbitMQ
+# Install Different Dockerfile example like MongoDB
 https://github.com/dockerfile
 
 [Install Redis with Docker in Ubuntu 14.04 - IMP](https://gist.github.com/kevingo/6017d641e5492e98bee570b77e2ba258)
