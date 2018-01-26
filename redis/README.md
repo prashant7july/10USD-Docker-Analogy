@@ -320,7 +320,7 @@ docker run -d --name redis -p 6379:6379 dockerfile/redis
 
 
 # Install Jenkins
-#### 2. Create shell.sh file
+#### Create shell.sh file
 
 ```
 docker pull jenkins
