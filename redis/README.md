@@ -180,5 +180,39 @@ $ curl 172.17.42.1
 Your output should look something like this:
 
 broken clouds, temperature 2 degrees, wind 7.2
+```
 
+https://cloudkul.com/blog/redis-introduction-with-php/
+```
+If you want to explore some basic commands regarding redis, try their interactive tutorial.
+
+Integrating Redis with php using Predis.
+
+Predis is a redis client which is used to integrate the redis with php, to use the predis we have to clone it from its official repository.
+
+git clone git://github.com/nrk/predis.git
+
+Connect your php application to Redis
+
+<?php
+require “predis/autoload.php”;
+Predis\Autoloader::register();
+try {
+  $redis = new PredisClient(); //If redis server and client is on same server
+  $redis = new PredisClient(array("scheme" => "tcp","host" => "192.168.1.10","port" => 6379 )); 
+  //if redis server is installed on some remote server, 192.168.1.10 is remote server IP.
+} catch (Exception $e) {
+  die($e->getMessage());
+}
+Now you can perform various getter and setter operations on Redis.
+Getter -> to get the key pair value.
+Setter -> to set the key pair value.
+Lets take an example to understand the basic functionality.
+ 
+$redis->set (“counter”, 2);
+$redis->incr(“counter”);
+$cvalue->$redis->get(“counter); //cvalue stores the value 3
+ 
+ 
+With the help of Redis we can perform various operations on sets, strings, hashes and lists as well as control the flow of application’s content to make it fast with the help of caching.
 ```
