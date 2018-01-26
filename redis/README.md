@@ -183,8 +183,8 @@ broken clouds, temperature 2 degrees, wind 7.2
 ```
 
 # PHP with redis
-https://cloudkul.com/blog/redis-introduction-with-php/
-https://redislabs.com/lp/php-redis/
+* [redis-introduction-with-php](https://cloudkul.com/blog/redis-introduction-with-php/)
+* [php-redis](https://redislabs.com/lp/php-redis/)
 
 #### 1. RUN Composer Command
 Before using Redis with PHP, you will need to install the predis/predis package via Composer:
