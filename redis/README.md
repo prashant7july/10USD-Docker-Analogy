@@ -232,3 +232,30 @@ With the help of Redis we can perform various operations on sets, strings, hashe
 
 https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/
 https://github.com/dockerfile
+[Install Redis with Docker in Ubuntu 14.04 - IMP](https://gist.github.com/kevingo/6017d641e5492e98bee570b77e2ba258)
+#### 1. Create Docekrfile
+
+```
+mkdir redis && touch Dockerfile
+```
+
+#### 2. Create Redis Dockerfile
+
+```
+FROM        ubuntu:14.04
+RUN         apt-get update && apt-get install -y redis-server
+EXPOSE      6379
+ENTRYPOINT  ["/usr/bin/redis-server"]
+```
+
+#### 3. Build redis images
+
+```
+docker build -t <your username>/redis .
+```
+
+#### 4. Run redis with expose 6379 port 
+
+```
+docker run -d --name redis -p 6379:6379 dockerfile/redis
+```
