@@ -250,6 +250,7 @@ With the help of Redis we can perform various operations on sets, strings, hashe
 
 https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/
 https://github.com/dockerfile
+
 [Install Redis with Docker in Ubuntu 14.04 - IMP](https://gist.github.com/kevingo/6017d641e5492e98bee570b77e2ba258)
 #### 1. Create Docekrfile
 
@@ -278,7 +279,7 @@ docker build -t <your username>/redis .
 docker run -d --name redis -p 6379:6379 dockerfile/redis
 ```
 
-[run-a-redis-server](https://stackoverflow.com/questions/31660691/how-to-run-a-redis-server-and-another-application-inside-docker)
+[Run Redis Server with Difference RUN vs CMD](https://stackoverflow.com/questions/31660691/how-to-run-a-redis-server-and-another-application-inside-docker)
 
 RUN commands are adding new image layers only. They are not executed during runtime. Only during build time of the image.
 Use CMD instead. You can combine multiple commands by externalizing them into a shell script which is invoked by CMD:
