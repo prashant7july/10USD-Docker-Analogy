@@ -117,8 +117,10 @@ composer require predis/predis:^1.0
 ```
 
 
-```
+[php-redis-extension-using-the-official-php-docker](https://stackoverflow.com/questions/31369867/how-to-install-php-redis-extension-using-the-official-php-docker-image-approach)
 
+#### 1. Create Composer Command
+```
 # https://hub.docker.com/_/php/
 FROM php:5.6-cli
 
@@ -146,16 +148,20 @@ RUN ./composer.phar install
 COPY . /usr/src/firstapp
 EXPOSE 80
 ENTRYPOINT ["php", "-S", "0.0.0.0:80", "-t", "web/"]
+```
 
+#### 2. Built
 
-Built
+```
 docker build -t currentweather-php ./
+```
 
-RUN
+#### 3. RUN
+```
 docker run --name=currentweather-redis-container -d redis
 
 docker run --link currentweather-redis-container:redis -p 80:80 -ti --rm currentweather-php
-
+```
 
 Testing locally
 
@@ -180,7 +186,6 @@ $ curl 172.17.42.1
 Your output should look something like this:
 
 broken clouds, temperature 2 degrees, wind 7.2
-```
 
 # PHP with redis
 * [redis-introduction-with-php](https://cloudkul.com/blog/redis-introduction-with-php/)
