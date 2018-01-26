@@ -333,3 +333,12 @@ docker run --name jenkins -d -p 49001:8080 -v $PWD/jenkins:/var/jenkins_home -t 
 
 # Install Different Dockerfile example like MongoDB
 https://github.com/dockerfile
+
+# Install PHP Redis from source
+Previously, I had shown you how to install PHP Redis from source but things changed with the latest Ubuntu LTS release. Now you can install the phpredis extension from the Ubuntu respositories.
+	
+If you want to install the latest version this is the route to take but if your are not so concerned about getting the latest then sudo apt-get install redis-server is the path to tow. Again this is an opportunity to learn how redis actually works and how it is setup. I personally prefer to do it this way so I know in and outs of the system and can alter it to suit my needs and expectations
+https://askubuntu.com/questions/868848/how-to-install-redis-on-ubuntu-16-04
+https://joshtronic.com/2014/05/12/how-to-install-phpredis-on-ubuntu-1404-lts/
+https://community.webcore.cloud/tutorials/how_to_install_configure_and_use_redis_on_ubuntu_1/
+
