@@ -275,3 +275,10 @@ In the start.sh script you write the following:
 nohup redis-server &
 uwsgi --http 0.0.0.0:8000 --module mymodule.wsgi
 ```
+
+
+Install Jenkins::shell.sh
+```
+docker pull jenkins
+docker run --name jenkins -d -p 49001:8080 -v $PWD/jenkins:/var/jenkins_home -t jenkins
+```
