@@ -1,26 +1,19 @@
 # Reference Link
-## [LINK1](https://github.com/aprice-/redisclustercompose) 
-## [LINK2](https://get-reddie.com/blog/redis4-cluster-docker-compose/)
-### Redis cluster using docker compose compatible with --scale argument
-## [LINK](https://github.com/Grokzen/docker-redis-cluster)
-### Redis cluster using docker compose compatible with --scale argument
-## [LINK](https://www.alibabacloud.com/forum/read-393)
-### High-availability Redis cluster in Docker
-## [LINK](https://github.com/AliyunContainerService/redis-cluster)
-### Redis Cluster with Sentinel by Docker Compose
-* Reference
- * [LINK](https://github.com/Zookal/DocHarris)
+ * [redisclustercompose](https://github.com/aprice-/redisclustercompose) 
+ * [redis4-cluster-docker-compose](https://get-reddie.com/blog/redis4-cluster-docker-compose/)
+ * [docker-redis-cluster](https://github.com/Grokzen/docker-redis-cluster)
+ * [LINK](https://www.alibabacloud.com/forum/read-393)
+ * [redis-cluster](https://github.com/AliyunContainerService/redis-cluster)
+ * [DocHarris](https://github.com/Zookal/DocHarris)
  * [LINK](https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/)
- * [LINK](https://github.com/mikechernev/redis-webui)
+ * [redis-webui](https://github.com/mikechernev/redis-webui)
  * [LINKBOOK](https://github.com/mikechernev/programming-ebooks/blob/master/Cheat%20Sheets/Rails.pdf)
- * [LINK - ubuntu](https://github.com/webkul/magento2-varnish-redis-ssl-docker-compose)
- * [LINK - IMP](https://stackoverflow.com/questions/33304388/calling-redis-cli-in-docker-compose-setup?rq=1)
- * [LINK](http://kuga.me/2016/07/22/docker-redis-cluster/)
- * [LINK](https://www.snip2code.com/Snippet/1906152/Redis-Cluster-with-Docker-Compose-v3)
- * [LINK](https://o-my-chenjian.com/2017/05/24/Deploy-Redis-Cluster-By-Docker/)
- * [LINK](https://github.com/vishnudxb/docker-redis-cluster)
-
-
+ * [magento2-varnish-redis-ssl-docker-compose - ubuntu](https://github.com/webkul/magento2-varnish-redis-ssl-docker-compose)
+ * [calling-redis-cli-in-docker-compose-setup - IMP](https://stackoverflow.com/questions/33304388/calling-redis-cli-in-docker-compose-setup?rq=1)
+ * [docker-redis-cluster/](http://kuga.me/2016/07/22/docker-redis-cluster/)
+ * [Redis-Cluster-with-Docker-Compose-v3](https://www.snip2code.com/Snippet/1906152/Redis-Cluster-with-Docker-Compose-v3)
+ * [Deploy-Redis-Cluster-By-Docker](https://o-my-chenjian.com/2017/05/24/Deploy-Redis-Cluster-By-Docker/)
+ * [docker-redis-cluster](https://github.com/vishnudxb/docker-redis-cluster)
 
 ```
 We need to adjust our Nginx image so it expects to serve a PHP application. Then we can get the two containers talking to eachother.
@@ -166,11 +159,13 @@ docker run --link currentweather-redis-container:redis -p 80:80 -ti --rm current
 Testing locally
 
 To test locally before deploying to Giant Swarm, we also need a Redis server. This is very easy to be set up, since we can use a standard image here without any modification. Simply run this to start your local Redis server container:
-
+```
 $ docker run --name=currentweather-redis-container -d redis
+```
 Now let’s start the server container for which we just created the Docker image. Here is the command (replace yourusername with your username):
-
+```
 $ docker run --link currentweather-redis-container:redis -p 80:80 -ti --rm registry.giantswarm.io/yourusername/currentweather-php
+```
 It should be running. But we need proof! Let’s issue an HTTP request.
 
 Accessing the server in a browser requires knowledge of the IP address your docker host binds to containers. This depends on the operating system.
@@ -180,9 +175,10 @@ Mac/Windows: with boot2docker you can find it out using boot2docker ip. The defa
 Linux: the command ip addr show docker0|grep inet should print out a line containing the correct address. The default in this case is 172.17.42.1.
 
 So one of the following two commands will likely work:
-
+```
 $ curl 192.168.59.103
 $ curl 172.17.42.1
+```
 Your output should look something like this:
 
 broken clouds, temperature 2 degrees, wind 7.2
@@ -281,8 +277,8 @@ docker run -d --name redis -p 6379:6379 dockerfile/redis
 
 [Run Redis Server with Difference RUN vs CMD](https://stackoverflow.com/questions/31660691/how-to-run-a-redis-server-and-another-application-inside-docker)
 
-RUN commands are adding new image layers only. They are not executed during runtime. Only during build time of the image.
-Use CMD instead. You can combine multiple commands by externalizing them into a shell script which is invoked by CMD:
+**RUN** commands are adding new image layers only. They are not executed during runtime. Only during build time of the image.
+Use **CMD** instead. You can combine multiple commands by externalizing them into a shell script which is invoked by CMD:
 
 #### 1. Create Docekrfile
 
