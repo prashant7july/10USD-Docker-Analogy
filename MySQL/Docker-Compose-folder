@@ -142,3 +142,7 @@ previously. - It states that the container port 3306 is "plugged" on port 3306 f
 - It also states that the / var / lib / mysql the container will be "connected" with the / data / mysql my machine. 
 
 [magento-2-docker-compose](https://cloudkul.com/blog/magento-2-docker-compose/)
+
+https://github.com/pierrefay/docker-apache2-mysql/tree/master/mysql
+https://www.pierrefay.com/blog/docker-magento.html
+https://github.com/sameersbn/docker-gitlab#mysql
