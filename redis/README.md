@@ -259,3 +259,5 @@ docker build -t <your username>/redis .
 ```
 docker run -d --name redis -p 6379:6379 dockerfile/redis
 ```
+
+[RabbitMQ Dockerfile for trusted automated Docker builds](https://github.com/dockerfile/rabbitmq)
