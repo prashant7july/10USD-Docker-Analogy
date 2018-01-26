@@ -216,3 +216,5 @@ $cvalue->$redis->get(“counter); //cvalue stores the value 3
  
 With the help of Redis we can perform various operations on sets, strings, hashes and lists as well as control the flow of application’s content to make it fast with the help of caching.
 ```
+
+https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/
