@@ -192,9 +192,16 @@ Predis is a redis client which is used to integrate the redis with php, to use t
 
 git clone git://github.com/nrk/predis.git
 
+Before using Redis with PHP, you will need to install the predis/predis package via Composer:
+
+composer require predis/predis
+
+Alternatively, you may install the PhpRedis PHP extension via PECL.
+
 Connect your php application to Redis
 
 <?php
+//check zf2 redis in vender
 require “predis/autoload.php”;
 Predis\Autoloader::register();
 try {
