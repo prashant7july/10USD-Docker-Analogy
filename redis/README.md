@@ -183,6 +183,7 @@ broken clouds, temperature 2 degrees, wind 7.2
 ```
 
 https://cloudkul.com/blog/redis-introduction-with-php/
+https://redislabs.com/lp/php-redis/
 ```
 If you want to explore some basic commands regarding redis, try their interactive tutorial.
 
@@ -196,6 +197,11 @@ Before using Redis with PHP, you will need to install the predis/predis package 
 
 composer require predis/predis
 
+{
+ "require" : {
+   "predis/predis" : "1.1.*"
+ }
+}
 Alternatively, you may install the PhpRedis PHP extension via PECL.
 
 Connect your php application to Redis
@@ -225,3 +231,4 @@ With the help of Redis we can perform various operations on sets, strings, hashe
 ```
 
 https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/
+https://github.com/dockerfile
