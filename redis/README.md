@@ -279,20 +279,45 @@ docker run -d --name redis -p 6379:6379 dockerfile/redis
 ```
 
 [RabbitMQ Dockerfile for trusted automated Docker builds](https://github.com/dockerfile/rabbitmq)
-
 https://stackoverflow.com/questions/31660691/how-to-run-a-redis-server-and-another-application-inside-docker
-```
 RUN commands are adding new image layers only. They are not executed during runtime. Only during build time of the image.
 
 Use CMD instead. You can combine multiple commands by externalizing them into a shell script which is invoked by CMD:
 
 CMD start.sh
 In the start.sh script you write the following:
-
+```
 #!/bin/bash
 nohup redis-server &
-uwsgi --http 0.0.0.0:8000 --module mymodule.wsgi
 ```
+
+#### 1. Create Docekrfile
+
+```
+mkdir redis && touch Dockerfile
+```
+
+#### 2. Create Redis Dockerfile
+
+```
+FROM        ubuntu:14.04
+RUN         apt-get update && apt-get install -y redis-server
+EXPOSE      6379
+CMD start.sh
+```
+
+#### 3. Build redis images
+
+```
+docker build -t <your username>/redis .
+```
+
+#### 4. Run redis with expose 6379 port 
+
+```
+docker run -d --name redis -p 6379:6379 dockerfile/redis
+```
+
 
 
 Install Jenkins::shell.sh
