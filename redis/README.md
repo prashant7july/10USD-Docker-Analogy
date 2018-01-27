@@ -109,8 +109,118 @@ composer require predis/predis:^1.0
 \Cache::store('redis')->put('Laradock', 'Awesome', 10);
 ```
 
-
+# Install composer
+```
+# Install composer globally
+RUN echo "Install composer globally"
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+```
 [php-redis-extension-using-the-official-php-docker](https://stackoverflow.com/questions/31369867/how-to-install-php-redis-extension-using-the-official-php-docker-image-approach)
+
+**The first way is to compile redis from sources and install.**
+```
+RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/2.2.7.tar.gz \
+    && tar xfz /tmp/redis.tar.gz \
+    && rm -r /tmp/redis.tar.gz \
+    && mv phpredis-2.2.7 /usr/src/php/ext/redis \
+    && docker-php-ext-install redis
+```
+docker-php-ext-install script is included in php-fpm image and can compile extensions and install them.
+
+OR
+
+```
+# Install phpredis 2.2.7
+RUN apt-get install -y unzip
+WORKDIR /root
+COPY ./lib/phpredis-2.2.7.zip phpredis-2.2.7.zip
+RUN unzip phpredis-2.2.7.zip
+WORKDIR phpredis-2.2.7
+RUN phpize
+RUN ./configure
+RUN make && make install
+RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
+```
+OR
+```
+ENV PHPREDIS_VERSION 3.1.4
+
+RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz  \
+    && mkdir /tmp/redis \
+    && tar -xf /tmp/redis.tar.gz -C /tmp/redis \
+    && rm /tmp/redis.tar.gz \
+    && ( \
+    cd /tmp/redis/phpredis-$PHPREDIS_VERSION \
+    && phpize \
+        && ./configure \
+    && make -j$(nproc) \
+        && make install \
+    ) \
+    && rm -r /tmp/redis \
+    && docker-php-ext-enable redis
+```
+
+**The second way you can do it is with PECL.**
+```
+RUN pecl install -o -f redis \
+&&  rm -rf /tmp/pear \
+&&  echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
+```
+
+**The first way is to compile redis from sources and install.**
+```
+## Install Xdebug
+RUN curl -fsSL 'https://xdebug.org/files/xdebug-2.5.3.tgz' -o xdebug.tar.gz \
+    && mkdir -p xdebug \
+    && tar -xf xdebug.tar.gz -C xdebug --strip-components=1 \
+    && rm xdebug.tar.gz \
+    && ( \
+        cd xdebug \
+        && phpize \
+        && ./configure --enable-xdebug \
+        && make -j$(nproc) \
+        && make install \
+    ) \
+    && rm -r xdebug \
+    && docker-php-ext-enable xdebug
+```
+**The second way you can do it is with PECL.**
+```
+# Install xdebug
+RUN pecl install xdebug
+RUN echo "zend_extenstion=/usr/local/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so" > /usr/local/etc/php/conf.d/xdebug.ini
+```
+
+**In Dockefile start shell script**
+```
+# Include the start script
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+WORKDIR /root
+
+CMD ["start.sh"]
+```
+```
+RUN chmod 755 /start.sh
+
+# Run the script departure
+CMD ["/bin/bash", "/start.sh"]
+```
+
+**Dockerfile PHP7-FPM with extensions (Redis, pdo_mysql, pdo_pgsql, intl, curl, json, opcache and xml)**
+```
+#In Dockfile
+FROM php:7-fpm
+
+RUN apt-get update && apt-get install -y git libcurl4-gnutls-dev zlib1g-dev libicu-dev g++ libxml2-dev libpq-dev \
+ && git clone -b php7 https://github.com/phpredis/phpredis.git /usr/src/php/ext/redis \
+ && docker-php-ext-install pdo pdo_mysql pdo_pgsql pgsql intl curl json opcache xml redis \
+ && apt-get autoremove && apt-get autoclean \
+ && rm -rf /var/lib/apt/lists/*
+ ```
+
+[Your First Service — in PHP](https://hub.docker.com/r/mehrdadkhah/php7/~/dockerfile/)
+[Your First Service — in PHP](https://firstgen-docs.giantswarm.io/guides/your-first-service/php/)
 
 #### 1. Create Composer Command
 ```
