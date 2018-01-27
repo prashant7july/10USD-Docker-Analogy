@@ -560,3 +560,156 @@ $ php predis_example.php
 /var/www/html/php/test-script/redis/predis_example.php:27:
 string(3) "bar"
 ```
+
+```
+//$redis = new \Predis\Client(array("scheme" => "tcp","host" => "127.0.0.1","port" => 7005)); 
+PHP Fatal error:  Uncaught Predis\Response\ServerException: MOVED 6680 172.17.0.2:7001 in /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php:370
+Stack trace:
+#0 /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php(335): Predis\Client->onErrorResponse(Object(Predis\Command\StringSet), Object(Predis\Response\Error))
+#1 /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php(314): Predis\Client->executeCommand(Object(Predis\Command\StringSet))
+#2 /var/www/html/php/test-script/redis/predis_example.php(21): Predis\Client->__call('set', Array)
+#3 {main}
+  thrown in /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php on line 370
+
+```
+
+```
+$ redis-cli -h 127.0.0.1
+127.0.0.1:6379>
+```
+
+```
+$ ps aux | grep redis OR ps aux | grep redis-server
+redis      924  0.1  0.1  40140  8712 ?        Ssl  12:10   0:03 /usr/bin/redis-server 127.0.0.1:6379
+```
+It's listening on all available IPs - if bound to a specific IP, you'd see something like 127.0.0.1:6379
+
+
+Port information
+```
+netstat -ntlp|grep -E '7001|7002|7003|7004|7005|7006'
+```
+
+When running we need to assign IP to the container, and assign IP need to create a network, the parameters to be modified according to your situation.
+
+```
+docker network create --subnet 10.10.10.0/24 onepiece
+```
+
+Here are some network related commands.
+#### List all network
+docker network ls
+
+#### Check out a network
+docker network inspect onepiece
+
+#### Delete a network
+docker network rm onepiece
+
+Then we can run the Docker container.
+```
+docker run --net onepiece --ip 10.10.10.100 -it -p 7000-7002:7000-7002 grokzen/redis-cluster
+```
+
+The above meaning is to use onepiece this network, and assign 10.10.10.100 this IP to the container. -p is the port mapping, the left side of the colon is the host port, the right is the port of the container, the redis in our container is to use the 7000-7002 these three ports.
+
+Continue to run the second container, command some changes on the IP and port, as follows.
+```
+docker run --net onepiece --ip 10.10.10.101 -it -p 7003-7005:7000-7002 grokzen/redis-cluster
+```
+The third container is similar.
+
+```
+docker run --net onepiece --ip 10.10.10.102 -it -p 7006-7008:7000-7002 grokzen/redis-cluster
+```
+
+```
+docker run --net onepiece --ip 10.10.10.101 -it -p 7003-7005:7000-7002 grokzen/redis-cluster
+```
+
+```
+docker run --net onepiece --ip 10.10.10.102 -it -p 7006-7008:7000-7002 grokzen/redis-cluster
+```
+We can see if there are 3 redis instances running inside one of the containers.
+
+Need to create for cluster
+such as ./src/redis-trib.rb create --replicas 1 127.0.0.1:6336 127.0.0.1:6337 127.0.0.1:6338 127.0.0.1:6339 127.0.0.1:6340 127.0.0.1:6341
+
+
+```
+ps aux | grep redis
+```
+
+```
+redis-cli -c -h 10.10.10.100 -p 7000
+```
+
+```
+redis-cli -c -p 6379 cluster info
+```
+
+```
+( ! ) Fatal error: Uncaught Predis\Response\ServerException: CLUSTERDOWN Hash slot not served in /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php on line 370
+( ! ) Predis\Response\ServerException: CLUSTERDOWN Hash slot not served in /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php on line 370
+```
+
+```
+$ redis-cli -c -h 10.10.10.100 -p 7000
+10.10.10.100:7000> CLUSTER INFO
+cluster_state:**fail**
+cluster_slots_assigned:5461
+cluster_slots_ok:5461
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:1
+cluster_size:1
+cluster_current_epoch:1
+cluster_my_epoch:1
+cluster_stats_messages_sent:0
+cluster_stats_messages_received:0
+```
+
+OR
+
+```
+$ redis-cli -p 7000 cluster info
+cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:6
+cluster_size:3
+cluster_current_epoch:6
+cluster_my_epoch:1
+cluster_stats_messages_sent:950
+cluster_stats_messages_received:700
+```
+
+#### Step 3: Assign Slots to the nodes.
+This is done using the "cluster addslots" command as mentioned here.
+Below we use inline shell script to assign the slots to the three nodes and ignore the output by directing it to "/dev/null". If we don't direct the output anywhere, it will still work, only that it will show "OK" many times.
+
+for slot in {0..5461}; do redis-cli -p 7000 CLUSTER ADDSLOTS $slot > /dev/null; done;
+for slot in {5462..10923}; do redis-cli -p 7001 CLUSTER ADDSLOTS $slot > /dev/null;; done;
+for slot in {10924..16383}; do redis-cli -p 7002 CLUSTER ADDSLOTS $slot > /dev/null;; done;
+
+Each command may take some time, around a minute. Executing "cluster info" after it shows that cluster state is "ok" and cluster_slots_assigned are 16384.
+
+```
+10.10.10.100:7000> CLUSTER INFO
+cluster_state:**ok**
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:6
+cluster_size:3
+cluster_current_epoch:6
+cluster_my_epoch:1
+cluster_stats_messages_sent:2602
+cluster_stats_messages_received:2352
+10.10.10.100:7000> 
+```
+
+[Redis Cluster - How to create a cluster without redis-trib.rb file ](http://pingredis.blogspot.in/2016/09/redis-cluster-how-to-create-cluster.html)
