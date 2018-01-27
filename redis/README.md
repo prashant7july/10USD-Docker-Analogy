@@ -1,4 +1,5 @@
-# Reference Link
+# Install PHP Redis from source install 
+#### Reference Link
  * [redisclustercompose](https://github.com/aprice-/redisclustercompose) 
  * [redis4-cluster-docker-compose](https://get-reddie.com/blog/redis4-cluster-docker-compose/)
  * [docker-redis-cluster](https://github.com/Grokzen/docker-redis-cluster)
@@ -355,7 +356,7 @@ string(3) "bar"
 
 With the help of Redis we can perform various operations on sets, strings, hashes and lists as well as control the flow of application’s content to make it fast with the help of caching.
 
-# Install PHP Redis from source
+# Install the phpredis extension from the Ubuntu respositories
 Previously, I had shown you how to install PHP Redis from source but things changed with the latest Ubuntu LTS release. Now you can install the phpredis extension from the Ubuntu respositories.
 	
 If you want to install the latest version this is the route to take but if your are not so concerned about getting the latest then sudo apt-get install redis-server is the path to tow. Again this is an opportunity to learn how redis actually works and how it is setup. I personally prefer to do it this way so I know in and outs of the system and can alter it to suit my needs and expectations
