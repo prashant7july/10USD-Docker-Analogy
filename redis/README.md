@@ -322,24 +322,24 @@ Alternatively, you may install the PhpRedis PHP extension via PECL.
 ```
 <?php
 //Connect your php application to Redis
-//check zf2 redis in vender
-require “predis/autoload.php”;
+include 'vendor/autoload.php';
 Predis\Autoloader::register();
 try {
   $redis = new PredisClient(); //If redis server and client is on same server
-  $redis = new PredisClient(array("scheme" => "tcp","host" => "192.168.1.10","port" => 6379 )); 
   //if redis server is installed on some remote server, 192.168.1.10 is remote server IP.
+  //$redis = new PredisClient(array("scheme" => "tcp","host" => "192.168.1.10","port" => 6379 )); 
 } catch (Exception $e) {
   die($e->getMessage());
 }
+/*
 Now you can perform various getter and setter operations on Redis.
 Getter -> to get the key pair value.
 Setter -> to set the key pair value.
 Lets take an example to understand the basic functionality.
- 
-$redis->set (“counter”, 2);
-$redis->incr(“counter”);
-$cvalue->$redis->get(“counter); //cvalue stores the value 3
+*/
+$redis->set("counter", 2);
+$redis->incr("counter");
+echo $redis->get("counter"); //3
 
 $redis->set("foo", "bar");
 $value = $redis->get("foo");
@@ -453,3 +453,110 @@ docker run --name jenkins -d -p 49001:8080 -v $PWD/jenkins:/var/jenkins_home -t 
 
 # Install Different Dockerfile example like MongoDB
 https://github.com/dockerfile
+
+
+# EXAMPLE 1: A Redis cluster in production but Googling shows this image [docker-redis-cluster](https://github.com/Grokzen/docker-redis-cluster).
+#### 1. Run the Docker Image with expose 7005
+
+```
+$ docker run -d \
+  --name redisserver \
+  -p 7005:7005 \
+  grokzen/redis-cluster
+```
+**OUTPUT**
+```
+latest: Pulling from grokzen/redis-cluster
+
+5040bd298390: Pull complete 
+996f41e871db: Pull complete 
+a40484248761: Pull complete 
+a97af2bf2ee7: Pull complete 
+dfec56c50bc8: Pull complete 
+a86edaad468b: Pull complete 
+394561348fd7: Pull complete 
+d3822da5b92f: Pull complete 
+3e497138f055: Pull complete 
+2c78dfd1ceed: Pull complete 
+c31f8c56919b: Pull complete 
+9d1ba3022d62: Pull complete 
+013ee148e80f: Pull complete 
+78b8edc7ab97: Pull complete 
+8d20209533d3: Pull complete 
+b2c3af25c797: Pull complete 
+573b5b13ecc8: Pull complete 
+df82e44dc4e4: Pull complete 
+a9b6088df972: Pull complete 
+Digest: sha256:1d0437daed657c0932210202a6ab6cffc85f02b9e947917783a4265ce12d5283
+Status: Downloaded newer image for grokzen/redis-cluster:latest
+a385fc52e102d875e7b4c1f69b441077878fbbd60afe9b30be47a8dc7a4bd108
+```
+
+#### 2. To connect to your cluster you can use the redis-cli tool:
+
+```
+$ redis-cli -c -p 7005
+```
+**OUTPUT**
+```
+127.0.0.1:7005>
+```
+
+#### 3. RUN Composer Command
+Before using Redis with PHP, you will need to install the predis/predis package via Composer:
+
+```
+$ composer require predis/predis
+```
+
+#### OR Create Composer.json
+
+```
+{
+    "require": {
+        "predis/predis": "^1.1"
+    }
+}
+```
+Alternatively, you may install the PhpRedis PHP extension via PECL.
+
+#### 2. Create predis_example.php file
+
+```
+<?php
+include 'vendor/autoload.php';
+Predis\Autoloader::register();
+
+if (!class_exists('Predis\Client')) {
+   die('Missing redis library. Please run "composer.phar require predis/predis"');
+}  
+
+try {
+  //If redis server and client is on same server
+  //$redis = new \Predis\Client(); 
+  //OR
+  $redis = new \Predis\Client(array("scheme" => "tcp","host" => "127.0.0.1","port" => 6379)); 
+  
+  //if redis server is installed on some remote server, 192.168.1.10 is remote server IP.
+  //$redis = new PredisClient(array("scheme" => "tcp","host" => "192.168.1.10","port" => 6379 )); 
+} catch (Exception $e) {
+  die($e->getMessage());
+}
+
+$redis->set("counter", 2);
+$redis->incr("counter");
+echo $redis->get("counter"); //3
+
+$redis->set("foo", "bar");
+$value = $redis->get("foo");
+var_dump($value);
+```
+
+#### RUN predis_example.php file
+
+```
+$ php predis_example.php
+3
+/var/www/html/php/test-script/redis/predis_example.php:27:
+string(3) "bar"
+```
