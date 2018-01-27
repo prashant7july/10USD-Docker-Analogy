@@ -365,6 +365,11 @@ If you want to install the latest version this is the route to take but if your 
 * [how_to_install_configure_and_use_redis_on_ubuntu_1](https://community.webcore.cloud/tutorials/how_to_install_configure_and_use_redis_on_ubuntu_1/)
 * [Integrate Redis-Server using Docker-Compose]https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/
 * [Install Redis with Docker in Ubuntu 14.04 - IMP](https://gist.github.com/kevingo/6017d641e5492e98bee570b77e2ba258)
+* [how-to-configure-a-redis-cluster-on-ubuntu-14-04](https://www.digitalocean.com/community/tutorials/how-to-configure-a-redis-cluster-on-ubuntu-14-04)
+* [how-to-set-up-a-redis-server-as-a-session-handler-for-php-on-ubuntu-14-04](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-redis-server-as-a-session-handler-for-php-on-ubuntu-14-04)
+* [how-to-install-redis-and-redis-php-client](https://anton.logvinenko.name/en/blog/how-to-install-redis-and-redis-php-client.html)
+* [install-redis-on-ubuntu-with-php](http://bookofzeus.com/articles/optimization/install-redis-on-ubuntu-with-php/)
+* [master-slave-redis-cluster-on-ubuntu-14-04](https://www.devopsdays.in/master-slave-redis-cluster-on-ubuntu-14-04/)
 
 #### 1. Create Docekrfile
 
