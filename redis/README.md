@@ -18,6 +18,7 @@
  * [how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604](https://github.com/linode/docs/blob/master/docs/applications/big-data/how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604.md)
  * [Configure Redis Cluster in Ubuntu Server 14.04
 ](http://codeflex.co/configuring-redis-cluster-on-linux/)
+ * [redis-cluster-using-docker IMP](https://medium.com/monitisemea/creating-redis-cluster-using-docker-67f65545796d) 
 
 ```
 We need to adjust our Nginx image so it expects to serve a PHP application. Then we can get the two containers talking to eachother.
