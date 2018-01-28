@@ -305,7 +305,7 @@ broken clouds, temperature 2 degrees, wind 7.2
 Before using Redis with PHP, you will need to install the predis/predis package via Composer:
 
 ```
-composer require predis/predis
+$ composer require predis/predis
 ```
 
 #### OR 
@@ -313,10 +313,11 @@ Create Composer.json
 
 ```
 {
- "require" : {
-   "predis/predis" : "1.1.*"
- }
+    "require": {
+        "predis/predis": "^1.1"
+    }
 }
+$ compose install
 ```
 Alternatively, you may install the PhpRedis PHP extension via PECL.
 
@@ -324,22 +325,24 @@ Alternatively, you may install the PhpRedis PHP extension via PECL.
 
 ```
 <?php
-//Connect your php application to Redis
 include 'vendor/autoload.php';
 Predis\Autoloader::register();
+
+if (!class_exists('Predis\Client')) {
+   die('Missing redis library. Please run "composer.phar require predis/predis"');
+}  
+
 try {
-  $redis = new PredisClient(); //If redis server and client is on same server
+  //If redis server and client is on same server
+  //$redis = new \Predis\Client();
+  $redis = new \Predis\Client(array("scheme" => "tcp","host" => "127.0.0.1","port" => 6379)); 
+  
   //if redis server is installed on some remote server, 192.168.1.10 is remote server IP.
   //$redis = new PredisClient(array("scheme" => "tcp","host" => "192.168.1.10","port" => 6379 )); 
 } catch (Exception $e) {
   die($e->getMessage());
 }
-/*
-Now you can perform various getter and setter operations on Redis.
-Getter -> to get the key pair value.
-Setter -> to set the key pair value.
-Lets take an example to understand the basic functionality.
-*/
+
 $redis->set("counter", 2);
 $redis->incr("counter");
 echo $redis->get("counter"); //3
@@ -360,7 +363,7 @@ string(3) "bar"
 With the help of Redis we can perform various operations on sets, strings, hashes and lists as well as control the flow of application’s content to make it fast with the help of caching.
 
 # Install the phpredis extension from the Ubuntu respositories
-Previously, I had shown you how to install PHP Redis from source but things changed with the latest Ubuntu LTS release. Now you can install the phpredis extension from the Ubuntu respositories.
+Previously, I had shown you how to **install PHP Redis from source** but things changed with the latest Ubuntu LTS release. Now you can **install the phpredis extension from the Ubuntu respositories**.
 	
 If you want to install the latest version this is the route to take but if your are not so concerned about getting the latest then sudo apt-get install redis-server is the path to tow. Again this is an opportunity to learn how redis actually works and how it is setup. I personally prefer to do it this way so I know in and outs of the system and can alter it to suit my needs and expectations
 * [how-to-install-redis-on-ubuntu-16-04](https://askubuntu.com/questions/868848/how-to-install-redis-on-ubuntu-16-04)
@@ -375,6 +378,7 @@ If you want to install the latest version this is the route to take but if your 
 * [master-slave-redis-cluster-on-ubuntu-14-04](https://www.devopsdays.in/master-slave-redis-cluster-on-ubuntu-14-04/)
 * [Create and Share Redis Docker Image](https://deis.com/blog/2015/creating-sharing-first-docker-image/)
 
+## Case 1
 #### 1. Create Docekrfile
 
 ```
@@ -407,6 +411,7 @@ docker run -d --name redis -p 6379:6379 dockerfile/redis
 **RUN** commands are adding new image layers only. They are not executed during runtime. Only during build time of the image.
 Use **CMD** instead. You can combine multiple commands by externalizing them into a shell script which is invoked by CMD:
 
+## Case 2
 #### 1. Create Docekrfile
 
 ```
@@ -442,7 +447,8 @@ docker build -t <your username>/redis .
 docker run -d --name redis -p 6379:6379 dockerfile/redis
 ```
 
-# CASE 1 
+# Redis Cluster 
+## CASE 1 
 #### 1: Check Redis Server Available 
 ```
 $ ps aux | grep redis
@@ -529,7 +535,7 @@ $ php predis_example.php
 string(3) "bar"
 ```
 
-# CASE 2
+## CASE 2
 ## A Redis cluster in production but Googling shows this image [docker-redis-cluster](https://github.com/Grokzen/docker-redis-cluster).
 #### 1. Run the Docker Image with expose 7005
 
@@ -689,7 +695,7 @@ docker network inspect onepiece
 docker network rm onepiece
 ```
 
-# Case 3
+## Case 3
 #### When running we need to assign IP to the container, and assign IP need to create a network, the parameters to be modified according to your situation.
 
 ```
@@ -858,6 +864,8 @@ such as
 ./src/redis-trib.rb create --replicas 1 127.0.0.1:6336 127.0.0.1:6337 127.0.0.1:6338 127.0.0.1:6339 127.0.0.1:6340 127.0.0.1:6341
 ```
 
+## Case 4
+Pending
 
 # BASH script for dumping all key, values using redis-cli
 ```
@@ -899,7 +907,22 @@ redis-cli-keys \* | while read key; do redis-cli get "$key"; done
 * [redis-cluster-install](https://github.com/Azure/azure-quickstart-templates/blob/master/redis-high-availability/redis-cluster-install.sh)
 * [redis-cluster-setup](https://github.com/Azure/azure-quickstart-templates/blob/master/redis-high-availability/redis-cluster-setup.sh)
 
-Redis in Containers as another Service
+#### Q: How can I stop redis-server? [stop-redis-server](https://stackoverflow.com/questions/6910378/how-can-i-stop-redis-server)
+Either connect to node instance and use shutdown command or if you are on ubuntu you can try to restart redis server through init.d:
+```
+/etc/init.d/redis-server restart
+```
+or stop/start it:
+```
+/etc/init.d/redis-server stop
+/etc/init.d/redis-server start
+```
+On Mac
+```
+redis-cli shutdown
+```
+
+# Redis in Containers as another Service
 ```
 docker run --rm -it -p 0.0.0.0:6379:6379 --name redis redis:alpine
 
@@ -908,20 +931,6 @@ docker run --rm -it --entrypoint=/bin/sh --link redis:redis redis:alpine
 ```
 
 https://www.linuxsecrets.com/1665-simple-guide-installing-and-configuring-redis-server-on-redhat-or-debian-distributions
-
-
-
-#### How can I stop redis-server? [stop-redis-server](https://stackoverflow.com/questions/6910378/how-can-i-stop-redis-server)
-Either connect to node instance and use shutdown command or if you are on ubuntu you can try to restart redis server through init.d:
-
-/etc/init.d/redis-server restart
-or stop/start it:
-
-/etc/init.d/redis-server stop
-/etc/init.d/redis-server start
-On Mac
-
-redis-cli shutdown
 
 # Install Jenkins
 #### Create shell.sh file
