@@ -812,24 +812,19 @@ cluster_stats_messages_received:0
 
 Making the nodes meet each other.
 This is done using the cluster meet command as mentioned here.
+```
 redis-cli -c -p 7000 cluster meet 127.0.0.1 7001
 redis-cli -c -p 7000 cluster meet 127.0.0.1 7002
 redis-cli -c -p 7000 cluster meet 127.0.0.1 7003
 redis-cli -c -p 7000 cluster meet 127.0.0.1 7004
 redis-cli -c -p 7000 cluster meet 127.0.0.1 7005
-
-#### Assign Slots to the nodes.
-This is done using the "cluster addslots" command as mentioned here.
-Below we use inline shell script to assign the slots to the three nodes and ignore the output by directing it to "/dev/null". If we don't direct the output anywhere, it will still work, only that it will show "OK" many times.
-
-for slot in {0..5461}; do redis-cli -p 7000 CLUSTER ADDSLOTS $slot > /dev/null; done;
-for slot in {5462..10923}; do redis-cli -p 7001 CLUSTER ADDSLOTS $slot > /dev/null;; done;
-for slot in {10924..16383}; do redis-cli -p 7002 CLUSTER ADDSLOTS $slot > /dev/null;; done;
-
-Each command may take some time, around a minute. Executing "cluster info" after it shows that cluster state is "ok" and cluster_slots_assigned are 16384.
+```
 
 ```
 $ redis-cli -p 7000 cluster info
+```
+**OUTPUT**
+```
 cluster_state:ok
 cluster_slots_assigned:16384
 cluster_slots_ok:16384
@@ -843,10 +838,13 @@ cluster_stats_messages_sent:950
 cluster_stats_messages_received:700
 ```
 
-
+```
+$ redis-cli -c -h 10.10.10.100 -p 7000
+```
+**OUTPUT**
 ```
 10.10.10.100:7000> CLUSTER INFO
-cluster_state:**ok**
+cluster_state:ok
 cluster_slots_assigned:16384
 cluster_slots_ok:16384
 cluster_slots_pfail:0
@@ -862,3 +860,34 @@ cluster_stats_messages_received:2352
 
 Need to create for cluster
 such as ./src/redis-trib.rb create --replicas 1 127.0.0.1:6336 127.0.0.1:6337 127.0.0.1:6338 127.0.0.1:6339 127.0.0.1:6340 127.0.0.1:6341
+
+
+
+# BASH script for dumping all key, values using redis-cli
+```
+#!/bin/bash
+
+# get all keys
+# find the type for each key
+# get value(s) for key
+# list, string, hash, set
+
+for each in $( redis-cli KEYS \* ); do
+  result=$(redis-cli type $each)
+  value=""
+  if [ $result == "list" ]
+  then
+    value=$(redis-cli lrange $each 0 -1)
+  elif [ $result == "string" ]
+  then
+    value=$(redis-cli get $each)
+  elif [ $result == "hash" ]
+  then
+    value=$(redis-cli hgetall $each)
+  elif [ $result == "set" ]
+  then
+    value=$(redis-cli smembers $each)
+  fi
+  printf "key %s\t\t type %s\t\t value %s.\n" $each $result $value
+done
+```
