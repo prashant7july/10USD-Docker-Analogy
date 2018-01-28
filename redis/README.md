@@ -901,4 +901,11 @@ for each in $( redis-cli KEYS \* ); do
 done
 ```
 
+# Use while to loop through each line:
+```
+redis-cli-keys \* | while read key; do redis-cli get "$key"; done
+```
+
+#### [Analyse-Redis-Cluster-nodes](https://github.com/myntra/Analyse-Redis-Cluster-nodes)
+
 [how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604](https://github.com/linode/docs/blob/master/docs/applications/big-data/how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604.md)
