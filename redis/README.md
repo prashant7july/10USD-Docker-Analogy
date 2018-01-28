@@ -924,6 +924,15 @@ docker run --rm -it --entrypoint=/bin/sh --link redis:redis redis:alpine
 
 https://www.linuxsecrets.com/1665-simple-guide-installing-and-configuring-redis-server-on-redhat-or-debian-distributions
 
+# Use redis cluster in php [https://www.zybuluo.com/phper/note/248555]
+The first two articles explain in detail the redis cluster build, it's the basic command of the practical method. This article said how to use redis cluster in php.
+
+Currently we use the php redis extension there are two main, the first one is the most commonly used phpredis, it is efficient c extension php written: https://github.com/phpredis/phpredis , there is a predis, It is written in php code, but also quite a lot: https://github.com/nrk/predis .
+
+We look at them separately in the cluster usage.
+ * [https://www.zybuluo.com/phper/note/248555](https://www.zybuluo.com/phper/note/248555)
+ * [redisclusterexception-with-phpredis-when-connecting-to-redis-cluster](https://stackoverflow.com/questions/35599977/redisclusterexception-with-phpredis-when-connecting-to-redis-cluster-which-is-no)
+ 
 # Install Jenkins
 #### Create shell.sh file
 
