@@ -113,12 +113,6 @@ composer require predis/predis:^1.0
 \Cache::store('redis')->put('Laradock', 'Awesome', 10);
 ```
 
-# Install composer
-```
-# Install composer globally
-RUN echo "Install composer globally"
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
-```
 [php-redis-extension-using-the-official-php-docker](https://stackoverflow.com/questions/31369867/how-to-install-php-redis-extension-using-the-official-php-docker-image-approach)
 
 **The first way is to compile redis from sources and install.**
@@ -946,3 +940,11 @@ docker run --name jenkins -d -p 49001:8080 -v $PWD/jenkins:/var/jenkins_home -t 
 
 # Install Different Dockerfile example like MongoDB
 https://github.com/dockerfile
+
+
+# Install composer
+```
+# Install composer globally
+RUN echo "Install composer globally"
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+```
