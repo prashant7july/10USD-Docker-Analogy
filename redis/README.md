@@ -932,8 +932,8 @@ docker run --name jenkins -d -p 49001:8080 -v $PWD/jenkins:/var/jenkins_home -t 
 ```
 
 # Install RabbitMQ
-[RabbitMQ Dockerfile for trusted automated Docker builds](https://github.com/dockerfile/rabbitmq)
-[setup-a-rabbitmq-cluster-on-ubuntu](https://thoughtsimproved.wordpress.com/2015/01/03/tech-recipe-setup-a-rabbitmq-cluster-on-ubuntu/)
+* [RabbitMQ Dockerfile for trusted automated Docker builds](https://github.com/dockerfile/rabbitmq)
+* [setup-a-rabbitmq-cluster-on-ubuntu](https://thoughtsimproved.wordpress.com/2015/01/03/tech-recipe-setup-a-rabbitmq-cluster-on-ubuntu/)
 
 # Install Different Dockerfile example like MongoDB
 https://github.com/dockerfile
