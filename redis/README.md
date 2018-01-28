@@ -15,6 +15,9 @@
  * [Redis-Cluster-with-Docker-Compose-v3](https://www.snip2code.com/Snippet/1906152/Redis-Cluster-with-Docker-Compose-v3)
  * [Deploy-Redis-Cluster-By-Docker](https://o-my-chenjian.com/2017/05/24/Deploy-Redis-Cluster-By-Docker/)
  * [docker-redis-cluster](https://github.com/vishnudxb/docker-redis-cluster)
+ * [how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604](https://github.com/linode/docs/blob/master/docs/applications/big-data/how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604.md)
+ * [Configure Redis Cluster in Ubuntu Server 14.04
+](http://codeflex.co/configuring-redis-cluster-on-linux/)
 
 ```
 We need to adjust our Nginx image so it expects to serve a PHP application. Then we can get the two containers talking to eachother.
@@ -438,22 +441,6 @@ docker build -t <your username>/redis .
 ```
 docker run -d --name redis -p 6379:6379 dockerfile/redis
 ```
-
-
-# Install Jenkins
-#### Create shell.sh file
-
-```
-docker pull jenkins
-docker run --name jenkins -d -p 49001:8080 -v $PWD/jenkins:/var/jenkins_home -t jenkins
-```
-
-# Install RabbitMQ
-[RabbitMQ Dockerfile for trusted automated Docker builds](https://github.com/dockerfile/rabbitmq)
-
-# Install Different Dockerfile example like MongoDB
-https://github.com/dockerfile
-
 
 # CASE 1 
 #### 1: Check Redis Server Available 
@@ -906,6 +893,47 @@ done
 redis-cli-keys \* | while read key; do redis-cli get "$key"; done
 ```
 
-#### [Analyse-Redis-Cluster-nodes](https://github.com/myntra/Analyse-Redis-Cluster-nodes)
+#### Bash Script
+* [Analyse-Redis-Cluster-nodes](https://github.com/myntra/Analyse-Redis-Cluster-nodes)
+* [redis-is-easy-trivial-hard](http://blog.commando.io/redis-is-easy-trivial-hard/)
+* [redis-cluster-install](https://github.com/Azure/azure-quickstart-templates/blob/master/redis-high-availability/redis-cluster-install.sh)
+* [redis-cluster-setup](https://github.com/Azure/azure-quickstart-templates/blob/master/redis-high-availability/redis-cluster-setup.sh)
 
-[how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604](https://github.com/linode/docs/blob/master/docs/applications/big-data/how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604.md)
+Redis in Containers as another Service
+```
+docker run --rm -it -p 0.0.0.0:6379:6379 --name redis redis:alpine
+
+docker run --rm -it --link redis:redis redis:alpine redis-cli -h redis -p 6379 help keys
+docker run --rm -it --entrypoint=/bin/sh --link redis:redis redis:alpine
+```
+
+https://www.linuxsecrets.com/1665-simple-guide-installing-and-configuring-redis-server-on-redhat-or-debian-distributions
+
+
+
+#### How can I stop redis-server? [stop-redis-server](https://stackoverflow.com/questions/6910378/how-can-i-stop-redis-server)
+Either connect to node instance and use shutdown command or if you are on ubuntu you can try to restart redis server through init.d:
+
+/etc/init.d/redis-server restart
+or stop/start it:
+
+/etc/init.d/redis-server stop
+/etc/init.d/redis-server start
+On Mac
+
+redis-cli shutdown
+
+# Install Jenkins
+#### Create shell.sh file
+
+```
+docker pull jenkins
+docker run --name jenkins -d -p 49001:8080 -v $PWD/jenkins:/var/jenkins_home -t jenkins
+```
+
+# Install RabbitMQ
+[RabbitMQ Dockerfile for trusted automated Docker builds](https://github.com/dockerfile/rabbitmq)
+[setup-a-rabbitmq-cluster-on-ubuntu](https://thoughtsimproved.wordpress.com/2015/01/03/tech-recipe-setup-a-rabbitmq-cluster-on-ubuntu/)
+
+# Install Different Dockerfile example like MongoDB
+https://github.com/dockerfile
