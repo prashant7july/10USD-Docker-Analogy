@@ -320,7 +320,10 @@ Alternatively, you may install the PhpRedis PHP extension via PECL.
 
 ```
 <?php
-include 'vendor/autoload.php';
+//namespace Examples;
+
+require (dirname(__DIR__).'/vendor/autoload.php');
+// or require (dirname(__DIR__).'/src/autoloader.php');
 Predis\Autoloader::register();
 
 if (!class_exists('Predis\Client')) {
