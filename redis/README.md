@@ -900,3 +900,5 @@ for each in $( redis-cli KEYS \* ); do
   printf "key %s\t\t type %s\t\t value %s.\n" $each $result $value
 done
 ```
+
+[how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604](https://github.com/linode/docs/blob/master/docs/applications/big-data/how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604.md)
