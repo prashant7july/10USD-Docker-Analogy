@@ -935,6 +935,7 @@ Currently we use the php redis extension there are two main, the first one is th
 We look at them separately in the cluster usage.
  * [https://www.zybuluo.com/phper/note/248555](https://www.zybuluo.com/phper/note/248555)
  * [redisclusterexception-with-phpredis-when-connecting-to-redis-cluster](https://stackoverflow.com/questions/35599977/redisclusterexception-with-phpredis-when-connecting-to-redis-cluster-which-is-no)
+ * [phpredis](https://www.thegeekstuff.com/2014/02/phpredis/)
  
 # Install Jenkins
 #### Create shell.sh file
