@@ -808,9 +808,8 @@ cluster_stats_messages_received:0
 
 ## How to resolve
 [Redis Cluster - How to create a cluster without redis-trib.rb file ](http://pingredis.blogspot.in/2016/09/redis-cluster-how-to-create-cluster.html)
-**This is due to the slots are not assigned to nodes**
 
-Making the nodes meet each other.
+#### 1. Making the nodes meet each other.
 This is done using the cluster meet command as mentioned here.
 ```
 redis-cli -c -p 7000 cluster meet 127.0.0.1 7001
@@ -820,9 +819,11 @@ redis-cli -c -p 7000 cluster meet 127.0.0.1 7004
 redis-cli -c -p 7000 cluster meet 127.0.0.1 7005
 ```
 
+#### 2. Run redis-cli tool to test.
 ```
 $ redis-cli -p 7000 cluster info
 ```
+
 **OUTPUT**
 ```
 cluster_state:ok
@@ -838,9 +839,11 @@ cluster_stats_messages_sent:950
 cluster_stats_messages_received:700
 ```
 
+#### OR
 ```
 $ redis-cli -c -h 10.10.10.100 -p 7000
 ```
+
 **OUTPUT**
 ```
 10.10.10.100:7000> CLUSTER INFO
@@ -858,9 +861,11 @@ cluster_stats_messages_received:2352
 10.10.10.100:7000> 
 ```
 
-Need to create for cluster
-such as ./src/redis-trib.rb create --replicas 1 127.0.0.1:6336 127.0.0.1:6337 127.0.0.1:6338 127.0.0.1:6339 127.0.0.1:6340 127.0.0.1:6341
-
+# Need to create for cluster
+such as 
+```
+./src/redis-trib.rb create --replicas 1 127.0.0.1:6336 127.0.0.1:6337 127.0.0.1:6338 127.0.0.1:6339 127.0.0.1:6340 127.0.0.1:6341
+```
 
 
 # BASH script for dumping all key, values using redis-cli
