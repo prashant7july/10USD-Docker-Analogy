@@ -509,7 +509,9 @@ Before using Redis with PHP, you will need to install the predis/predis package 
 $ composer require predis/predis
 ```
 
-#### OR Create Composer.json
+#### OR 
+
+#### Create Composer.json
 
 ```
 {
@@ -517,6 +519,7 @@ $ composer require predis/predis
         "predis/predis": "^1.1"
     }
 }
+$ compose install
 ```
 Alternatively, you may install the PhpRedis PHP extension via PECL.
 
@@ -533,8 +536,8 @@ if (!class_exists('Predis\Client')) {
 
 try {
   //If redis server and client is on same server
-  //$redis = new \Predis\Client(); 
-  //OR
+  //$redis = new \Predis\Client();
+  //Local systm already setup redis $ redis-cli -h 127.0.0.1
   $redis = new \Predis\Client(array("scheme" => "tcp","host" => "127.0.0.1","port" => 6379)); 
   
   //if redis server is installed on some remote server, 192.168.1.10 is remote server IP.
@@ -552,7 +555,7 @@ $value = $redis->get("foo");
 var_dump($value);
 ```
 
-#### RUN predis_example.php file
+#### 3. RUN predis_example.php file
 
 ```
 $ php predis_example.php
@@ -560,6 +563,8 @@ $ php predis_example.php
 /var/www/html/php/test-script/redis/predis_example.php:27:
 string(3) "bar"
 ```
+
+
 
 ```
 //$redis = new \Predis\Client(array("scheme" => "tcp","host" => "127.0.0.1","port" => 7005)); 
