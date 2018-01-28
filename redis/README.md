@@ -372,7 +372,7 @@ If you want to install the latest version this is the route to take but if your 
 * [master-slave-redis-cluster-on-ubuntu-14-04](https://www.devopsdays.in/master-slave-redis-cluster-on-ubuntu-14-04/)
 * [Create and Share Redis Docker Image](https://deis.com/blog/2015/creating-sharing-first-docker-image/)
 
-## Case 1
+## Case 1::Install redis-server on ubuntu though Dockefile
 #### 1. Create Docekrfile
 
 ```
@@ -405,9 +405,8 @@ docker run -d --name redis -p 6379:6379 dockerfile/redis
 **RUN** commands are adding new image layers only. They are not executed during runtime. Only during build time of the image.
 Use **CMD** instead. You can combine multiple commands by externalizing them into a shell script which is invoked by CMD:
 
-## Case 2
+## Case 2::Install redis-server on ubuntu though Dockefile
 #### 1. Create Docekrfile
-
 ```
 mkdir redis && touch Dockerfile
 ```
@@ -568,7 +567,6 @@ a385fc52e102d875e7b4c1f69b441077878fbbd60afe9b30be47a8dc7a4bd108
 ```
 
 #### 2. To connect to your cluster you can use the redis-cli tool:
-
 ```
 $ redis-cli -c -p 7005
 $ redis-cli -h 127.0.0.1
@@ -633,7 +631,6 @@ var_dump($value);
 ```
 
 #### 5. RUN predis_example.php file
-
 ```
 //$redis = new \Predis\Client(array("scheme" => "tcp","host" => "127.0.0.1","port" => 7005)); 
 PHP Fatal error:  Uncaught Predis\Response\ServerException: MOVED 6680 172.17.0.2:7001 in /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php:370
