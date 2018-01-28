@@ -764,13 +764,16 @@ var_dump($value);
 ( ! ) Predis\Response\ServerException: CLUSTERDOWN Hash slot not served in /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php on line 370
 ```
 
+#### Find redis-server.
 ```
 ps aux | grep redis
 ```
 
+#### Run redis-cli tool to test.
 ```
 redis-cli -c -p 7000 cluster info
 ```
+
 **OUTPUT**
 ```
 cluster_state:**fail**
@@ -785,11 +788,12 @@ cluster_my_epoch:1
 cluster_stats_messages_sent:0
 cluster_stats_messages_received:0
 ```
-**OR**
 
+**OR**
 ```
 $ redis-cli -c -h 10.10.10.100 -p 7000
 ```
+
 **OUTPUT**
 ```
 10.10.10.100:7000> CLUSTER INFO
