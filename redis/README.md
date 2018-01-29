@@ -199,6 +199,9 @@ WORKDIR /root
 
 CMD ["start.sh"]
 ```
+
+**OR**
+
 ```
 RUN chmod 755 /start.sh
 
@@ -413,6 +416,29 @@ You need to log on to the container using docker exec (as mentioned in another a
 docker exec -it redisinstance sh
 ```
 That will log you on to the container. You can then run redis-cli from the command prompt.
+
+#### 6. [Assign static IP to Docker container](https://stackoverflow.com/questions/42083843/how-to-enter-a-redis-server-shell-inside-a-running-docker-compose-container)
+
+When running redis we need to assign IP to the container, and assign IP need to create a network, the parameters to be modified according to your situation.
+First you need to create you own docker network (dockerservernetworkip)
+
+```
+docker network create --subnet=172.18.0.0/16 dockerservernetworkip
+```
+
+#### 6. Run the Docker container.
+
+```
+docker run --net dockerservernetworkip --ip 172.18.0.22 -it -p 6379:6379 redis-server
+```
+docker: Error response from daemon: driver failed programming external connectivity on endpoint pedantic_euler (6f5ccee0ba423dc7b037cb8883eae94166d5c57caf13543fb044b114af36fb7d): Error starting userland proxy: listen tcp 0.0.0.0:6379: bind: address already in use.
+
+Again Run with different Local system post
+```
+docker run --net dockerservernetworkip --ip 172.18.0.22 -it -p 6380:6379 redis-server
+docker run --rm --net=host --pid=host --privileged -it justincormack/nsenter1 /bin/sh
+docker run --net mynet123 --ip 172.18.0.22 -it ubuntu bash
+```
 
 [Run Redis Server with Difference RUN vs CMD](https://stackoverflow.com/questions/31660691/how-to-run-a-redis-server-and-another-application-inside-docker)
 
@@ -701,6 +727,7 @@ docker network inspect onepiece
 #### Delete a network
 ```
 docker network rm onepiece
+docker network rm $(docker network ls -q)
 ```
 
 ## Case 3
