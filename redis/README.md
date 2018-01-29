@@ -436,7 +436,7 @@ docker: Error response from daemon: driver failed programming external connectiv
 Again Run with different Local system post
 ```
 docker run --net dockerservernetworkip --ip 172.18.0.22 -it -p 6380:6379 redis-server
-docker run --rm --net=host --pid=host --privileged -it justincormack/nsenter1 /bin/sh
+docker run --net dockerservernetworkip --ip 172.18.0.22 -it -p 6380:6379 redis-server /bin/sh
 docker run --net mynet123 --ip 172.18.0.22 -it ubuntu bash
 ```
 
@@ -460,7 +460,13 @@ mkdir redis && touch Dockerfile
 FROM        ubuntu:14.04
 RUN         apt-get update && apt-get install -y redis-server
 EXPOSE      6379
-CMD start.sh
+
+# Include the start script
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+WORKDIR /root
+
+CMD ["start.sh"]
 ```
 
 #### 3. Create start.sh File

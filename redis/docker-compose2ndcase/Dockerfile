@@ -1,15 +1,5 @@
-FROM redis:latest
+CMD ['/usr/local/work/scripts/run.sh']
 
-MAINTAINER PRASHANT SHEKHER <prashant7july@gmail.com>
+ENTRYPOINT  ["bin/bash"]
 
-## For security settings uncomment, make the dir, copy conf, and also start with the conf, to use it
-#RUN mkdir -p /usr/local/etc/redis
-#COPY redis.conf /usr/local/etc/redis/redis.conf
-
-VOLUME /data
-
-EXPOSE 6379
-
-#CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]
-CMD ["redis-server"]
-#ENTRYPOINT redis-server --daemonize yes && bash
+EXPOSE 4200/tcp
