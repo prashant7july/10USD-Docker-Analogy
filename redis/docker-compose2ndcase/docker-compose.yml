@@ -1,0 +1,6 @@
+#https://stackoverflow.com/questions/47552621/dockerfile-cmd-run-multiple-command
+version: '2'
+services:
+  redis:
+    build: ./Dockerfile
+    command: /usr/bin/src/redis-server
