@@ -409,6 +409,9 @@ docker run -d --name redis -p 6379:6379 dockerfile/redis
 **RUN** commands are adding new image layers only. They are not executed during runtime. Only during build time of the image.
 Use **CMD** instead. You can combine multiple commands by externalizing them into a shell script which is invoked by CMD:
 
+**RUN** gets executed when an image gets **built**.
+**CMD** gets executed when a container gets **run**.
+
 ## Case 2::Install redis-server on ubuntu though Dockefile
 #### 1. Create Docekrfile
 ```
