@@ -396,13 +396,23 @@ ENTRYPOINT  ["/usr/bin/redis-server"]
 
 ```
 docker build -t <your username>/redis .
+Example: docker build -t redis-server .
 ```
 
 #### 4. Run redis with expose 6379 port 
 
 ```
 docker run -d --name redis -p 6379:6379 dockerfile/redis
+Example: docker run --name redisinstance -t redis-server
 ```
+
+#### 5. [Run redis-cli in redis-server shell](https://stackoverflow.com/questions/42083843/how-to-enter-a-redis-server-shell-inside-a-running-docker-compose-container)
+You need to log on to the container using docker exec (as mentioned in another answer - not sure if the command is 100% correct as it may just run redis-cli then exit).
+
+```
+docker exec -it redisinstance sh
+```
+That will log you on to the container. You can then run redis-cli from the command prompt.
 
 [Run Redis Server with Difference RUN vs CMD](https://stackoverflow.com/questions/31660691/how-to-run-a-redis-server-and-another-application-inside-docker)
 
