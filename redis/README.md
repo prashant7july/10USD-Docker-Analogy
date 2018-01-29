@@ -15,6 +15,10 @@
  * [Redis-Cluster-with-Docker-Compose-v3](https://www.snip2code.com/Snippet/1906152/Redis-Cluster-with-Docker-Compose-v3)
  * [Deploy-Redis-Cluster-By-Docker](https://o-my-chenjian.com/2017/05/24/Deploy-Redis-Cluster-By-Docker/)
  * [docker-redis-cluster](https://github.com/vishnudxb/docker-redis-cluster)
+ * [how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604](https://github.com/linode/docs/blob/master/docs/applications/big-data/how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604.md)
+ * [Configure Redis Cluster in Ubuntu Server 14.04
+](http://codeflex.co/configuring-redis-cluster-on-linux/)
+ * [redis-cluster-using-docker IMP](https://medium.com/monitisemea/creating-redis-cluster-using-docker-67f65545796d) 
 
 ```
 We need to adjust our Nginx image so it expects to serve a PHP application. Then we can get the two containers talking to eachother.
@@ -110,12 +114,6 @@ composer require predis/predis:^1.0
 \Cache::store('redis')->put('Laradock', 'Awesome', 10);
 ```
 
-# Install composer
-```
-# Install composer globally
-RUN echo "Install composer globally"
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
-```
 [php-redis-extension-using-the-official-php-docker](https://stackoverflow.com/questions/31369867/how-to-install-php-redis-extension-using-the-official-php-docker-image-approach)
 
 **The first way is to compile redis from sources and install.**
@@ -302,7 +300,7 @@ broken clouds, temperature 2 degrees, wind 7.2
 Before using Redis with PHP, you will need to install the predis/predis package via Composer:
 
 ```
-composer require predis/predis
+$ composer require predis/predis
 ```
 
 #### OR 
@@ -310,10 +308,11 @@ Create Composer.json
 
 ```
 {
- "require" : {
-   "predis/predis" : "1.1.*"
- }
+    "require": {
+        "predis/predis": "^1.1"
+    }
 }
+$ compose install
 ```
 Alternatively, you may install the PhpRedis PHP extension via PECL.
 
@@ -321,22 +320,27 @@ Alternatively, you may install the PhpRedis PHP extension via PECL.
 
 ```
 <?php
-//Connect your php application to Redis
-include 'vendor/autoload.php';
+//namespace Examples;
+
+require (dirname(__DIR__).'/vendor/autoload.php');
+// or require (dirname(__DIR__).'/src/autoloader.php');
 Predis\Autoloader::register();
+
+if (!class_exists('Predis\Client')) {
+   die('Missing redis library. Please run "composer.phar require predis/predis"');
+}  
+
 try {
-  $redis = new PredisClient(); //If redis server and client is on same server
+  //If redis server and client is on same server
+  //$redis = new \Predis\Client();
+  $redis = new \Predis\Client(array("scheme" => "tcp","host" => "127.0.0.1","port" => 6379)); 
+  
   //if redis server is installed on some remote server, 192.168.1.10 is remote server IP.
   //$redis = new PredisClient(array("scheme" => "tcp","host" => "192.168.1.10","port" => 6379 )); 
 } catch (Exception $e) {
   die($e->getMessage());
 }
-/*
-Now you can perform various getter and setter operations on Redis.
-Getter -> to get the key pair value.
-Setter -> to set the key pair value.
-Lets take an example to understand the basic functionality.
-*/
+
 $redis->set("counter", 2);
 $redis->incr("counter");
 echo $redis->get("counter"); //3
@@ -357,7 +361,7 @@ string(3) "bar"
 With the help of Redis we can perform various operations on sets, strings, hashes and lists as well as control the flow of application’s content to make it fast with the help of caching.
 
 # Install the phpredis extension from the Ubuntu respositories
-Previously, I had shown you how to install PHP Redis from source but things changed with the latest Ubuntu LTS release. Now you can install the phpredis extension from the Ubuntu respositories.
+Previously, I had shown you how to **install PHP Redis from source** but things changed with the latest Ubuntu LTS release. Now you can **install the phpredis extension from the Ubuntu respositories**.
 	
 If you want to install the latest version this is the route to take but if your are not so concerned about getting the latest then sudo apt-get install redis-server is the path to tow. Again this is an opportunity to learn how redis actually works and how it is setup. I personally prefer to do it this way so I know in and outs of the system and can alter it to suit my needs and expectations
 * [how-to-install-redis-on-ubuntu-16-04](https://askubuntu.com/questions/868848/how-to-install-redis-on-ubuntu-16-04)
@@ -372,6 +376,7 @@ If you want to install the latest version this is the route to take but if your 
 * [master-slave-redis-cluster-on-ubuntu-14-04](https://www.devopsdays.in/master-slave-redis-cluster-on-ubuntu-14-04/)
 * [Create and Share Redis Docker Image](https://deis.com/blog/2015/creating-sharing-first-docker-image/)
 
+## Case 1::Install redis-server on ubuntu though Dockefile
 #### 1. Create Docekrfile
 
 ```
@@ -404,8 +409,11 @@ docker run -d --name redis -p 6379:6379 dockerfile/redis
 **RUN** commands are adding new image layers only. They are not executed during runtime. Only during build time of the image.
 Use **CMD** instead. You can combine multiple commands by externalizing them into a shell script which is invoked by CMD:
 
-#### 1. Create Docekrfile
+**RUN** gets executed when an image gets **built**.
+**CMD** gets executed when a container gets **run**.
 
+## Case 2::Install redis-server on ubuntu though Dockefile
+#### 1. Create Docekrfile
 ```
 mkdir redis && touch Dockerfile
 ```
@@ -439,23 +447,96 @@ docker build -t <your username>/redis .
 docker run -d --name redis -p 6379:6379 dockerfile/redis
 ```
 
+# Redis Cluster 
+## CASE 1 
+#### 1: Check Redis Server Available 
+```
+$ ps aux | grep redis
+OR
+$ ps aux | grep redis-server
+redis      924  0.1  0.1  40140  8712 ?        Ssl  12:10   0:03 /usr/bin/redis-server 127.0.0.1:6379
+```
+It's listening on all available IPs - if bound to a specific IP, you'd see something like 127.0.0.1:6379
 
-# Install Jenkins
-#### Create shell.sh file
+#### 2. To connect to your cluster you can use the redis-cli tool:
 
 ```
-docker pull jenkins
-docker run --name jenkins -d -p 49001:8080 -v $PWD/jenkins:/var/jenkins_home -t jenkins
+$ redis-cli -h 127.0.0.1
+127.0.0.1:6379>
 ```
 
-# Install RabbitMQ
-[RabbitMQ Dockerfile for trusted automated Docker builds](https://github.com/dockerfile/rabbitmq)
+```
+redis-cli -c -h 127.0.0.1 -p 6379
+```
 
-# Install Different Dockerfile example like MongoDB
-https://github.com/dockerfile
+```
+redis-cli -c -p 6379 cluster info
+```
 
+#### 3. RUN Composer Command
+Before using Redis with PHP, you will need to install the predis/predis package via Composer:
 
-# EXAMPLE 1: A Redis cluster in production but Googling shows this image [docker-redis-cluster](https://github.com/Grokzen/docker-redis-cluster).
+```
+$ composer require predis/predis
+```
+
+#### OR 
+
+#### Create Composer.json
+
+```
+{
+    "require": {
+        "predis/predis": "^1.1"
+    }
+}
+$ compose install
+```
+Alternatively, you may install the PhpRedis PHP extension via PECL.
+
+#### 4. Create predis_example.php file
+
+```
+<?php
+include 'vendor/autoload.php';
+Predis\Autoloader::register();
+
+if (!class_exists('Predis\Client')) {
+   die('Missing redis library. Please run "composer.phar require predis/predis"');
+}  
+
+try {
+  //If redis server and client is on same server
+  //$redis = new \Predis\Client();
+  //Local systm already setup redis $ redis-cli -h 127.0.0.1
+  $redis = new \Predis\Client(array("scheme" => "tcp","host" => "127.0.0.1","port" => 6379)); 
+  
+  //if redis server is installed on some remote server, 192.168.1.10 is remote server IP.
+  //$redis = new PredisClient(array("scheme" => "tcp","host" => "192.168.1.10","port" => 6379 )); 
+} catch (Exception $e) {
+  die($e->getMessage());
+}
+
+$redis->set("counter", 2);
+$redis->incr("counter");
+echo $redis->get("counter"); //3
+
+$redis->set("foo", "bar");
+$value = $redis->get("foo");
+var_dump($value);
+```
+
+#### 5. RUN predis_example.php file
+
+```
+$ php predis_example.php
+3
+/var/www/html/php/test-script/redis/predis_example.php:27:
+string(3) "bar"
+```
+
+## CASE 2
+## A Redis cluster in production but Googling shows this image [docker-redis-cluster](https://github.com/Grokzen/docker-redis-cluster).
 #### 1. Run the Docker Image with expose 7005
 
 ```
@@ -493,9 +574,10 @@ a385fc52e102d875e7b4c1f69b441077878fbbd60afe9b30be47a8dc7a4bd108
 ```
 
 #### 2. To connect to your cluster you can use the redis-cli tool:
-
 ```
 $ redis-cli -c -p 7005
+$ redis-cli -h 127.0.0.1
+$ redis-cli -c -h 127.0.0.1 -p 7005
 ```
 **OUTPUT**
 ```
@@ -509,7 +591,9 @@ Before using Redis with PHP, you will need to install the predis/predis package 
 $ composer require predis/predis
 ```
 
-#### OR Create Composer.json
+#### OR 
+
+#### Create Composer.json
 
 ```
 {
@@ -517,10 +601,11 @@ $ composer require predis/predis
         "predis/predis": "^1.1"
     }
 }
+$ compose install
 ```
 Alternatively, you may install the PhpRedis PHP extension via PECL.
 
-#### 2. Create predis_example.php file
+#### 4. Create predis_example.php file
 
 ```
 <?php
@@ -533,9 +618,9 @@ if (!class_exists('Predis\Client')) {
 
 try {
   //If redis server and client is on same server
-  //$redis = new \Predis\Client(); 
-  //OR
-  $redis = new \Predis\Client(array("scheme" => "tcp","host" => "127.0.0.1","port" => 6379)); 
+  //$redis = new \Predis\Client();
+  //Local systm already setup redis $ redis-cli -h 127.0.0.1
+  $redis = new \Predis\Client(array("scheme" => "tcp","host" => "127.0.0.1","port" => 7005)); 
   
   //if redis server is installed on some remote server, 192.168.1.10 is remote server IP.
   //$redis = new PredisClient(array("scheme" => "tcp","host" => "192.168.1.10","port" => 6379 )); 
@@ -552,15 +637,7 @@ $value = $redis->get("foo");
 var_dump($value);
 ```
 
-#### RUN predis_example.php file
-
-```
-$ php predis_example.php
-3
-/var/www/html/php/test-script/redis/predis_example.php:27:
-string(3) "bar"
-```
-
+#### 5. RUN predis_example.php file
 ```
 //$redis = new \Predis\Client(array("scheme" => "tcp","host" => "127.0.0.1","port" => 7005)); 
 PHP Fatal error:  Uncaught Predis\Response\ServerException: MOVED 6680 172.17.0.2:7001 in /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php:370
@@ -573,88 +650,143 @@ Stack trace:
 
 ```
 
-```
-$ redis-cli -h 127.0.0.1
-127.0.0.1:6379>
-```
-
+#### 6. Use the redis-server:
 ```
 $ ps aux | grep redis OR ps aux | grep redis-server
 redis      924  0.1  0.1  40140  8712 ?        Ssl  12:10   0:03 /usr/bin/redis-server 127.0.0.1:6379
 ```
 It's listening on all available IPs - if bound to a specific IP, you'd see something like 127.0.0.1:6379
 
+#### 6. To connect to your cluster you can use the redis-cli tool:
+docker run **-d** --name redisserver -p 7005:7005 grokzen/redis-cluster [run background due to -d then the below command executable]
 
-Port information
+```
+$ redis-cli -h 127.0.0.1
+127.0.0.1:6379>
+```
+
+#### 7. Port information
 ```
 netstat -ntlp|grep -E '7001|7002|7003|7004|7005|7006'
 ```
 
-When running we need to assign IP to the container, and assign IP need to create a network, the parameters to be modified according to your situation.
+#### Answer of case 2
+**When running redis we need to assign IP to the container, and assign IP need to create a network, the parameters to be modified according to your situation.**
 
 ```
 docker network create --subnet 10.10.10.0/24 onepiece
 ```
 
-Here are some network related commands.
+# Here are some network related commands.
 #### List all network
+```
 docker network ls
+```
 
 #### Check out a network
+```
 docker network inspect onepiece
+```
 
 #### Delete a network
+```
 docker network rm onepiece
+```
 
-Then we can run the Docker container.
+## Case 3
+#### When running we need to assign IP to the container, and assign IP need to create a network, the parameters to be modified according to your situation.
+
+```
+docker network create --subnet 10.10.10.0/24 onepiece
+```
+
+#### Run the Docker container.
 ```
 docker run --net onepiece --ip 10.10.10.100 -it -p 7000-7002:7000-7002 grokzen/redis-cluster
 ```
-
 The above meaning is to use onepiece this network, and assign 10.10.10.100 this IP to the container. -p is the port mapping, the left side of the colon is the host port, the right is the port of the container, the redis in our container is to use the 7000-7002 these three ports.
 
-Continue to run the second container, command some changes on the IP and port, as follows.
-```
-docker run --net onepiece --ip 10.10.10.101 -it -p 7003-7005:7000-7002 grokzen/redis-cluster
-```
-The third container is similar.
-
-```
-docker run --net onepiece --ip 10.10.10.102 -it -p 7006-7008:7000-7002 grokzen/redis-cluster
-```
-
+#### Continue to run the second container, command some changes on the IP and port, as follows.
 ```
 docker run --net onepiece --ip 10.10.10.101 -it -p 7003-7005:7000-7002 grokzen/redis-cluster
 ```
 
+#### The third container is similar.
 ```
 docker run --net onepiece --ip 10.10.10.102 -it -p 7006-7008:7000-7002 grokzen/redis-cluster
 ```
-We can see if there are 3 redis instances running inside one of the containers.
+**We can see if there are 3 redis instances running inside one of the containers.**
 
-Need to create for cluster
-such as ./src/redis-trib.rb create --replicas 1 127.0.0.1:6336 127.0.0.1:6337 127.0.0.1:6338 127.0.0.1:6339 127.0.0.1:6340 127.0.0.1:6341
-
+#### 4. Create/RUN predis_example.php file, the output rase isssues
 
 ```
-ps aux | grep redis
+<?php
+include 'vendor/autoload.php';
+Predis\Autoloader::register();
+
+if (!class_exists('Predis\Client')) {
+   die('Missing redis library. Please run "composer.phar require predis/predis"');
+}  
+
+try {
+  //If redis server and client is on same server
+  //$redis = new \Predis\Client();
+  //Local systm already setup redis $ redis-cli -h 127.0.0.1
+  $redis = new \Predis\Client(array("scheme" => "tcp","host" => "10.10.10.100","port" => 7005)); 
+  
+  //if redis server is installed on some remote server, 192.168.1.10 is remote server IP.
+  //$redis = new PredisClient(array("scheme" => "tcp","host" => "192.168.1.10","port" => 6379 )); 
+} catch (Exception $e) {
+  die($e->getMessage());
+}
+
+$redis->set("counter", 2);
+$redis->incr("counter");
+echo $redis->get("counter"); //3
+
+$redis->set("foo", "bar");
+$value = $redis->get("foo");
+var_dump($value);
 ```
 
-```
-redis-cli -c -h 10.10.10.100 -p 7000
-```
-
-```
-redis-cli -c -p 6379 cluster info
-```
-
+**OUTPT**
 ```
 ( ! ) Fatal error: Uncaught Predis\Response\ServerException: CLUSTERDOWN Hash slot not served in /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php on line 370
 ( ! ) Predis\Response\ServerException: CLUSTERDOWN Hash slot not served in /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php on line 370
 ```
 
+#### Find redis-server.
+```
+ps aux | grep redis
+```
+
+#### Run redis-cli tool to test.
+```
+redis-cli -c -p 7000 cluster info
+```
+
+**OUTPUT**
+```
+cluster_state:**fail**
+cluster_slots_assigned:5461
+cluster_slots_ok:5461
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:1
+cluster_size:1
+cluster_current_epoch:1
+cluster_my_epoch:1
+cluster_stats_messages_sent:0
+cluster_stats_messages_received:0
+```
+
+**OR**
 ```
 $ redis-cli -c -h 10.10.10.100 -p 7000
+```
+
+**OUTPUT**
+```
 10.10.10.100:7000> CLUSTER INFO
 cluster_state:**fail**
 cluster_slots_assigned:5461
@@ -669,10 +801,26 @@ cluster_stats_messages_sent:0
 cluster_stats_messages_received:0
 ```
 
-OR
+## How to resolve
+[Redis Cluster - How to create a cluster without redis-trib.rb file ](http://pingredis.blogspot.in/2016/09/redis-cluster-how-to-create-cluster.html)
 
+#### 1. Making the nodes meet each other.
+This is done using the cluster meet command as mentioned here.
+```
+redis-cli -c -p 7000 cluster meet 127.0.0.1 7001
+redis-cli -c -p 7000 cluster meet 127.0.0.1 7002
+redis-cli -c -p 7000 cluster meet 127.0.0.1 7003
+redis-cli -c -p 7000 cluster meet 127.0.0.1 7004
+redis-cli -c -p 7000 cluster meet 127.0.0.1 7005
+```
+
+#### 2. Run redis-cli tool to test.
 ```
 $ redis-cli -p 7000 cluster info
+```
+
+**OUTPUT**
+```
 cluster_state:ok
 cluster_slots_assigned:16384
 cluster_slots_ok:16384
@@ -686,19 +834,15 @@ cluster_stats_messages_sent:950
 cluster_stats_messages_received:700
 ```
 
-#### Step 3: Assign Slots to the nodes.
-This is done using the "cluster addslots" command as mentioned here.
-Below we use inline shell script to assign the slots to the three nodes and ignore the output by directing it to "/dev/null". If we don't direct the output anywhere, it will still work, only that it will show "OK" many times.
+#### OR
+```
+$ redis-cli -c -h 10.10.10.100 -p 7000
+```
 
-for slot in {0..5461}; do redis-cli -p 7000 CLUSTER ADDSLOTS $slot > /dev/null; done;
-for slot in {5462..10923}; do redis-cli -p 7001 CLUSTER ADDSLOTS $slot > /dev/null;; done;
-for slot in {10924..16383}; do redis-cli -p 7002 CLUSTER ADDSLOTS $slot > /dev/null;; done;
-
-Each command may take some time, around a minute. Executing "cluster info" after it shows that cluster state is "ok" and cluster_slots_assigned are 16384.
-
+**OUTPUT**
 ```
 10.10.10.100:7000> CLUSTER INFO
-cluster_state:**ok**
+cluster_state:ok
 cluster_slots_assigned:16384
 cluster_slots_ok:16384
 cluster_slots_pfail:0
@@ -712,69 +856,116 @@ cluster_stats_messages_received:2352
 10.10.10.100:7000> 
 ```
 
-[Redis Cluster - How to create a cluster without redis-trib.rb file ](http://pingredis.blogspot.in/2016/09/redis-cluster-how-to-create-cluster.html)
-
+# Need to create for cluster
+such as 
 ```
-<?php
-include 'vendor/autoload.php';
-Predis\Autoloader::register();
-
-if (!class_exists('Predis\Client')) {
-   die('Missing redis library. Please run "composer.phar require predis/predis"');
-}  
-
-//$parameters = ['tcp://10.10.10.100:7000', 'tcp://10.10.10.100:7001', 'tcp://10.10.10.100:7003'];
-//$options    = ['cluster' => 'redis'];
-
-//$redis = new Predis\Client($parameters, $options);
-
-// Predis supports master / slave replication scenarios where write operations are
-// performed on the master server and read operations are executed against one of
-// the slaves. The behaviour of commands or EVAL scripts can be customized at will.
-// As soon as a write operation is performed, all the subsequent requests (reads
-// or writes) will be served by the master server.
-//
-// This example must be executed with the second Redis server acting as the slave
-// of the first one using the SLAVEOF command.
-//
-/*
-$parameters = array(
-    'tcp://10.10.10.100:7000?database=15&alias=master',
-    'tcp://10.10.10.100:7001?database=15&alias=slave',
-);
-*/
-$parameters = array(
-    'tcp://10.10.10.100:7000?alias=master',
-    'tcp://10.10.10.100:7001?alias=slave',
-);
-
-$options = array('replication' => true);
-$client = new Predis\Client($parameters, $options);
-
-// Read operation.
-$exists = $client->exists('foo') ? 'yes' : 'no';
-$current = $client->getConnection()->getCurrent()->getParameters();
-echo "Does 'foo' exist on {$current->alias}? $exists.\n";
-
-// Write operation.
-$client->set('foo', 'bar');
-$current = $client->getConnection()->getCurrent()->getParameters();
-echo "Now 'foo' has been set to 'bar' on {$current->alias}!\n";
-
-// Read operation.
-$bar = $client->get('foo');
-$current = $client->getConnection()->getCurrent()->getParameters();
-echo "We just fetched 'foo' from {$current->alias} and its value is '$bar'.\n";
-
-/* OUTPUT:
-Does 'foo' exist on slave? yes.
-Now 'foo' has been set to 'bar' on master!
-We just fetched 'foo' from master and its value is 'bar'.
-*/
+./src/redis-trib.rb create --replicas 1 127.0.0.1:6336 127.0.0.1:6337 127.0.0.1:6338 127.0.0.1:6339 127.0.0.1:6340 127.0.0.1:6341
 ```
 
-#### Error
+## Case 4
+Pending
+
+# BASH script for dumping all key, values using redis-cli
 ```
-( ! ) Fatal error: Uncaught Predis\Response\ServerException: MOVED 12182 127.0.0.1:7002 in /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php on line 370
-( ! ) Predis\Response\ServerException: MOVED 12182 127.0.0.1:7002 in /var/www/html/php/test-script/redis/vendor/predis/predis/src/Client.php on line 370
+#!/bin/bash
+
+# get all keys
+# find the type for each key
+# get value(s) for key
+# list, string, hash, set
+
+for each in $( redis-cli KEYS \* ); do
+  result=$(redis-cli type $each)
+  value=""
+  if [ $result == "list" ]
+  then
+    value=$(redis-cli lrange $each 0 -1)
+  elif [ $result == "string" ]
+  then
+    value=$(redis-cli get $each)
+  elif [ $result == "hash" ]
+  then
+    value=$(redis-cli hgetall $each)
+  elif [ $result == "set" ]
+  then
+    value=$(redis-cli smembers $each)
+  fi
+  printf "key %s\t\t type %s\t\t value %s.\n" $each $result $value
+done
+```
+
+# Use while to loop through each line:
+```
+redis-cli-keys \* | while read key; do redis-cli get "$key"; done
+```
+
+#### Bash Script
+* [Analyse-Redis-Cluster-nodes](https://github.com/myntra/Analyse-Redis-Cluster-nodes)
+* [redis-is-easy-trivial-hard](http://blog.commando.io/redis-is-easy-trivial-hard/)
+* [redis-cluster-install](https://github.com/Azure/azure-quickstart-templates/blob/master/redis-high-availability/redis-cluster-install.sh)
+* [redis-cluster-setup](https://github.com/Azure/azure-quickstart-templates/blob/master/redis-high-availability/redis-cluster-setup.sh)
+
+#### Q: How can I stop redis-server? [stop-redis-server](https://stackoverflow.com/questions/6910378/how-can-i-stop-redis-server)
+Either connect to node instance and use shutdown command or if you are on ubuntu you can try to restart redis server through init.d:
+```
+/etc/init.d/redis-server restart
+```
+or stop/start it:
+```
+/etc/init.d/redis-server stop
+/etc/init.d/redis-server start
+```
+On Mac
+```
+redis-cli shutdown
+```
+
+# Redis in Containers as another Service
+```
+docker run --rm -it -p 0.0.0.0:6379:6379 --name redis redis:alpine
+
+docker run --rm -it --link redis:redis redis:alpine redis-cli -h redis -p 6379 help keys
+docker run --rm -it --entrypoint=/bin/sh --link redis:redis redis:alpine
+```
+
+https://www.linuxsecrets.com/1665-simple-guide-installing-and-configuring-redis-server-on-redhat-or-debian-distributions
+
+# Use redis cluster in php [https://www.zybuluo.com/phper/note/248555]
+The first two articles explain in detail the redis cluster build, it's the basic command of the practical method. This article said how to use redis cluster in php.
+
+Currently we use the php redis extension there are two main, the first one is the most commonly used phpredis, it is efficient c extension php written: https://github.com/phpredis/phpredis , there is a predis, It is written in php code, but also quite a lot: https://github.com/nrk/predis .
+
+We look at them separately in the cluster usage.
+ * [https://www.zybuluo.com/phper/note/248555](https://www.zybuluo.com/phper/note/248555)
+ * [redisclusterexception-with-phpredis-when-connecting-to-redis-cluster](https://stackoverflow.com/questions/35599977/redisclusterexception-with-phpredis-when-connecting-to-redis-cluster-which-is-no)
+ * [phpredis](https://www.thegeekstuff.com/2014/02/phpredis/)
+ * [examples/clusters](https://github.com/cheprasov/php-redis-client/blob/master/examples/clusters.php)
+ 
+## Running tests
+Run Docker container with Redis for tests https://hub.docker.com/r/cheprasov/redis-for-tests/
+Run Docker container with Redis Cluster for tests https://hub.docker.com/r/cheprasov/redis-cluster-for-tests/
+To run tests type in console:
+
+# Install Jenkins
+#### Create shell.sh file
+
+```
+docker pull jenkins
+docker run --name jenkins -d -p 49001:8080 -v $PWD/jenkins:/var/jenkins_home -t jenkins
+```
+
+# Install RabbitMQ
+* [RabbitMQ Dockerfile for trusted automated Docker builds](https://github.com/dockerfile/rabbitmq)
+* [setup-a-rabbitmq-cluster-on-ubuntu](https://thoughtsimproved.wordpress.com/2015/01/03/tech-recipe-setup-a-rabbitmq-cluster-on-ubuntu/)
+* [php-redis-client](https://github.com/cheprasov/php-redis-client)
+
+# Install Different Dockerfile example like MongoDB
+https://github.com/dockerfile
+
+
+# Install composer
+```
+# Install composer globally
+RUN echo "Install composer globally"
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 ```
