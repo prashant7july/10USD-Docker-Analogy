@@ -440,6 +440,49 @@ docker run --net dockerservernetworkip --ip 172.18.0.22 -it -p 6380:6379 redis-s
 docker run --net mynet123 --ip 172.18.0.22 -it ubuntu bash
 ```
 
+#### 6. ip addr
+```
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 1c:1b:0d:17:47:f9 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.85/24 brd 192.168.1.255 scope global enp1s0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::1e1b:dff:fe17:47f9/64 scope link 
+       valid_lft forever preferred_lft forever
+3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:fb:a5:ea:1c brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:fbff:fea5:ea1c/64 scope link 
+       valid_lft forever preferred_lft forever
+27: br-fa777c0c0570: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:bf:ce:6c:f5 brd ff:ff:ff:ff:ff:ff
+    inet 172.18.0.1/16 scope global br-fa777c0c0570
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:bfff:fece:6cf5/64 scope link 
+       valid_lft forever preferred_lft forever
+33: vethf582c27@if32: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br-fa777c0c0570 state UP group default 
+    link/ether 36:6b:62:f5:af:75 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::346b:62ff:fef5:af75/64 scope link 
+       valid_lft forever preferred_lft forever
+```
+
+**3: docker0**: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:fb:a5:ea:1c brd ff:ff:ff:ff:ff:ff
+    inet **172.17.0.1/16** scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:fbff:fea5:ea1c/64 scope link 
+       valid_lft forever preferred_lft forever
+
+```
+curl 172.17.0.1
+```
+
 [Run Redis Server with Difference RUN vs CMD](https://stackoverflow.com/questions/31660691/how-to-run-a-redis-server-and-another-application-inside-docker)
 
 **RUN** commands are adding new image layers only. They are not executed during runtime. Only during build time of the image.
