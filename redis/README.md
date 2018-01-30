@@ -505,7 +505,10 @@ RUN         apt-get update && apt-get install -y redis-server
 EXPOSE      6379
 
 # Include the start script
+# We copy the start.sh script into /usr/local/bin, make it executable and reference it in the CMD instruction.
 COPY start.sh /usr/local/bin/start.sh
+
+# If we dont make it exectable you will get an error like "exec:/user/local/bin/start.sh: Premission denied"
 RUN chmod +x /usr/local/bin/start.sh
 WORKDIR /root
 
