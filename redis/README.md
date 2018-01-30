@@ -57,6 +57,18 @@ Redis-Master <--> Redis-Slave
  * [running_redis_service](http://www.usyiyi.cn/sources/docker/engine/examples/running_redis_service.html)
  * [redis](https://hub.docker.com/r/bitnami/redis/)
 
+# Additionally, If you want to use your own redis.conf …
+You can create your own Dockerfile that adds a redis.conf from the context into /data/, like so.
+```
+FROM redis
+COPY redis.conf /usr/local/etc/redis/redis.conf
+CMD [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+```
+Alternatively, you can specify something along the same lines with docker run options.
+```
+$ docker run -v /myredis/conf/redis.conf:/usr/local/etc/redis/redis.conf --name myredis redis redis-server /usr/local/etc/redis/redis.conf
+```
+
 ```
 We need to adjust our Nginx image so it expects to serve a PHP application. Then we can get the two containers talking to eachother.
 
