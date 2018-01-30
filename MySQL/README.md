@@ -202,7 +202,8 @@ Most of the normal tools will work, although their usage might be a little convo
 ```
 $ docker exec mysql2 sh -c 'exec mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > /some/path/on/your/host/all-databases.sql
 ```
-[Refer the Link Mysql](https://github.com/dockerhome/containers/tree/master/mysql)
-https://stackoverflow.com/questions/25920029/setting-up-mysql-and-importing-dump-within-dockerfile
-[LINK](https://github.com/Zookal/DocHarris)
-[LINK](https://stackoverflow.com/questions/25920029/setting-up-mysql-and-importing-dump-within-dockerfile)
+#### Reference Link
+ * [Refer the Link Mysql](https://github.com/dockerhome/containers/tree/master/mysql)
+ * [mysql-and-importing-dump](https://stackoverflow.com/questions/25920029/setting-up-mysql-and-importing-dump-within-dockerfile)
+ * [LINK](https://github.com/Zookal/DocHarris)
+ * [mysql-master-slave-replication-tutorial](https://www.toptal.com/mysql/mysql-master-slave-replication-tutorial)

@@ -1,4 +1,39 @@
-# Install PHP Redis from source install 
+# [What is Redis Master Slave?](http://blog.awareshop.com/2015/01/11/redis-master-slave-setup-on-single-machine/)
+
+Redis Master Slave setup is same as any other Master Slave setup. It allows you to maintain multiple copies of same data automatically. That will serve the purpose of backup and scaling. You can use Redis Slave to serve the request the reading requests and hence your master load decreases.
+
+We will start with installation of Redis Server, then Redis Slave and then will setup Redis Mater Slave replication.
+
+#### Also, check out these other How-to articles
+ * How to setup Redis Session Manager on tcServer/Tomcat
+ * How to setup and run multiple Redis server instances on a Linux host
+ * How to setup Redis Master and Slave replication
+ * How to setup Redis Sentinel and HAProxy to provide automatic failover between Redis Master and Slave servers.
+
+#### How to setup Redis master and slave replication
+ * It's very simple to setup a master-slave Redis replication that allows the slave Redis server to keep an exact backup copy of a master server database.
+
+#### [Redis setup involving some or all instances of:](https://github.com/aphorise/docker-redis)
+###### - standalone (master) 
+###### - replication / mirroring (slave) 
+###### - health checker and switch (sentinel) *
+
+Redis Dockerfiles for standalone (master), replication (slave) and sentinel setup. 
+``` 
+        Redis-Sentinel-1
+             _/ \_
+           _|     |_
+          /         \ 
+Redis-Master <--> Redis-Slave
+          \_       _/
+    	    |_   _|
+              \ /
+        Redis-Sentinel-2
+```
+* [docker-redis-master-slave](http://blog.yuanxiaolong.cn/blog/2014/10/29/docker-redis-master-slave/)
+* [OR](http://www.xyting.org/2015/10/06/docker-redis-master-slave.html)
+
+# Install PHP Redis from source install
 #### Reference Link
  * [redisclustercompose](https://github.com/aprice-/redisclustercompose) 
  * [redis4-cluster-docker-compose](https://get-reddie.com/blog/redis4-cluster-docker-compose/)
@@ -18,7 +53,9 @@
  * [how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604](https://github.com/linode/docs/blob/master/docs/applications/big-data/how-to-install-and-configure-a-redis-cluster-on-ubuntu-1604.md)
  * [Configure Redis Cluster in Ubuntu Server 14.04
 ](http://codeflex.co/configuring-redis-cluster-on-linux/)
- * [redis-cluster-using-docker IMP](https://medium.com/monitisemea/creating-redis-cluster-using-docker-67f65545796d) 
+ * [redis-cluster-using-docker IMP](https://medium.com/monitisemea/creating-redis-cluster-using-docker-67f65545796d)
+ * [running_redis_service](http://www.usyiyi.cn/sources/docker/engine/examples/running_redis_service.html)
+ * [redis](https://hub.docker.com/r/bitnami/redis/)
 
 ```
 We need to adjust our Nginx image so it expects to serve a PHP application. Then we can get the two containers talking to eachother.
@@ -534,7 +571,7 @@ Example: docker build -t redis-server .
 
 ```
 docker run -d --name redis -p 6379:6379 dockerfile/redis
-Example: docker run --name redisinstance -t redis-server
+Example: docker run --name redisinstance -t redis-server    
 ```
 
 # Redis Cluster 
