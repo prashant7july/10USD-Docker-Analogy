@@ -527,12 +527,14 @@ nohup redis-server &
 
 ```
 docker build -t <your username>/redis .
+Example: docker build -t redis-server .
 ```
 
 #### 5. Run redis with expose 6379 port 
 
 ```
 docker run -d --name redis -p 6379:6379 dockerfile/redis
+Example: docker run --name redisinstance -t redis-server
 ```
 
 # Redis Cluster 
@@ -769,6 +771,7 @@ docker network create --subnet 10.10.10.0/24 onepiece
 #### List all network
 ```
 docker network ls
+docker network ls -q
 ```
 
 #### Check out a network
