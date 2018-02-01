@@ -165,6 +165,20 @@ composer require predis/predis:^1.0
 
 [php-redis-extension-using-the-official-php-docker](https://stackoverflow.com/questions/31369867/how-to-install-php-redis-extension-using-the-official-php-docker-image-approach)
 
+
+
+**[The first way is to compile redis from sources and install.](https://gist.github.com/diegopacheco/af89b493bc892d470ba8ff79a813c0d2)**
+```
+Download and Install Redis 4.0
+
+wget http://download.redis.io/releases/redis-4.0.6.tar.gz
+tar -xzvf redis-4.0.6.tar.gz
+rm -rf redis-4.0.6.tar.gz
+cd redis-4.0.6/
+make
+make test
+```
+
 **The first way is to compile redis from sources and install.**
 ```
 RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/2.2.7.tar.gz \
@@ -1045,6 +1059,7 @@ redis-cli-keys \* | while read key; do redis-cli get "$key"; done
 * [redis-is-easy-trivial-hard](http://blog.commando.io/redis-is-easy-trivial-hard/)
 * [redis-cluster-install](https://github.com/Azure/azure-quickstart-templates/blob/master/redis-high-availability/redis-cluster-install.sh)
 * [redis-cluster-setup](https://github.com/Azure/azure-quickstart-templates/blob/master/redis-high-availability/redis-cluster-setup.sh)
+* [Redis Create Cluster](https://gist.github.com/diegopacheco/a8f98b53a42e0faecbc3)
 
 #### Q: How can I stop redis-server? [stop-redis-server](https://stackoverflow.com/questions/6910378/how-can-i-stop-redis-server)
 Either connect to node instance and use shutdown command or if you are on ubuntu you can try to restart redis server through init.d:
