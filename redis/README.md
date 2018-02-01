@@ -1096,6 +1096,7 @@ We look at them separately in the cluster usage.
  * [redisclusterexception-with-phpredis-when-connecting-to-redis-cluster](https://stackoverflow.com/questions/35599977/redisclusterexception-with-phpredis-when-connecting-to-redis-cluster-which-is-no)
  * [phpredis](https://www.thegeekstuff.com/2014/02/phpredis/)
  * [examples/clusters](https://github.com/cheprasov/php-redis-client/blob/master/examples/clusters.php)
+ * [redis-cluster-playground](https://github.com/mattsta/redis-cluster-playground)
  
 ## Running tests
 Run Docker container with Redis for tests https://hub.docker.com/r/cheprasov/redis-for-tests/
