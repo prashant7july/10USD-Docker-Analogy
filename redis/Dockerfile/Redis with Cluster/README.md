@@ -67,7 +67,7 @@ redis-cli -p 7005
 ```
 
 ```
-abc@abc-To-be-filled-by-O-E-M:~$ ps aux | grep redis
+$ ps aux | grep redis
 redis      945  0.1  0.0  40136  6612 ?        Ssl  09:55   0:06 /usr/bin/redis-server 127.0.0.1:6379
 guest-t+  7541  0.1  0.1  41648  9548 ?        Ssl  11:04   0:02 redis-server *:7000
 guest-t+  8327  0.2  0.1  41648  9600 ?        Ssl  11:33   0:00 redis-server *:7001
@@ -77,13 +77,11 @@ guest-t+  8650  0.3  0.1  41648  9620 ?        Ssl  11:33   0:00 redis-server *:
 guest-t+  8750  0.3  0.1  41648  9500 ?        Ssl  11:33   0:00 redis-server *:7005
 abc       8791  0.0  0.0  14224  1028 pts/2    S+   11:33   0:00 grep --color=auto redis
 abc@abc-To-be-filled-by-O-E-M:~$ 
-
-SO That is wrong becuase node is not clustered
 ```
+SO That is wrong becuase node is not clustered.
 
-http://pingredis.blogspot.in/2016/09/redis-cluster-how-to-create-cluster.html
-
-#### 1. Create redis nodes are started in cluster mode(Redis with Cluster)
+## Redis Cluster with master/slave replication - [How to create a cluster without redis-trib.rb file](http://pingredis.blogspot.in/2016/09/redis-cluster-how-to-create-cluster.html)
+#### 1. Create redis nodes are started in cluster mode (Redis with Cluster)
 
 ```
 docker run -it \
@@ -99,7 +97,7 @@ docker run -it \
   grokzen/redis-cluster
 ```
 
-#### 2. check redis is indeed running
+#### 2. Check redis is indeed running.
 ```
 $ ps -ef | grep redis
 ```
@@ -200,16 +198,10 @@ ec4af96fce158f77652b496351829d61b9244c5c 127.0.0.1:7003 slave 61977136fbf3009707
 a9e429a1c67d1ef79894d39b9677dc01baa78900 127.0.0.1:7001 master - 0 1517475910190 2 connected 5461-10922
 61977136fbf3009707c8b9d3fff058781fb5c47c 172.17.0.2:7000 myself,master - 0 0 1 connected 0-5460
 29a734fd790db093814773e12600f2c9eee2035b 172.17.0.2:7002 master - 0 1517475910693 3 connected 10923-16383
-abc@abc-To-be-filled-by-O-E-M:~$ 
 ```
 
 #### 5: Assign Slaves to masters.
-Note that we had assigned slots to 7000, 7001, 7002, and plan to make the other nodes as their slaves.
-Slaves are assigned using **cluster replicate** command as described here.
-The syntax of the command is
-"redis-cli -c -p <port_of_slave> cluster replicate <node_id_of_its_master>"
-To find the node id of masters, we can use "cluster nodes" command and note the ids corresponding to ports 7000, 7001, 7002.
-
+Note that we had assigned slots to 7000, 7001, 7002, and plan to make the other nodes as their slaves. Slaves are assigned using **cluster replicate** command as described here. The syntax of the command is **redis-cli -c -p <port_of_slave> cluster replicate <node_id_of_its_master>** To find the node id of masters, we can use "cluster nodes" command and note the ids corresponding to ports 7000, 7001, 7002.
 
 ```
 $ redis-cli -c -p 7003 cluster replicate 61977136fbf3009707c8b9d3fff058781fb5c47c
@@ -219,8 +211,6 @@ OK
 $ redis-cli -c -p 7005 cluster replicate 29a734fd790db093814773e12600f2c9eee2035b
 OK
 ```
-
-
 Congratulations, your cluster is up and running. Now, you can add some dummy data in it and start playing around with it.
 
 ```
