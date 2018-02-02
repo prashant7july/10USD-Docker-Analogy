@@ -104,6 +104,7 @@ SO That is wrong becuase node is not clustered.
 #### 1. Create redis nodes are started in cluster mode (Redis with Cluster)
 * [redis without cluster](https://github.com/developersworkspace/Docker-Samples/tree/master/redis)
 * [redis-cluster](https://github.com/developersworkspace/Docker-Samples/tree/master/redis-cluster)
+* [Redis-Cluster with shellscript](https://github.com/developersworkspace/Production-Apps/tree/master/Redis-Cluster)
 * [docker-redis-cluster](https://github.com/eloycoto/docker-redis-cluster)
 * [docker-redis-cluster](https://github.com/Grokzen/docker-redis-cluster)
 ```
