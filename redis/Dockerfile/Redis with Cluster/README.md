@@ -3,11 +3,19 @@
 To start each node with different port change the value of the environment variable $REDIS_NODE_PORT during running the node.
 ```
 $ docker run -e "REDIS_NODE_PORT=6000" --name node1 -d husseingalal/redis_cl_node
-$ docker run -e "REDIS_NODE_PORT=6009" --name node9 -p 7009:7009 -d husseingalal/redis_cl_node
 ```
 
 **OR**
+```
+docker run -e "REDIS_NODE_PORT=7000" --name node1 -p 7000:7000 -d husseingalal/redis_cl_node
+docker run -e "REDIS_NODE_PORT=7001" --name node2 -p 7001:7001 -d husseingalal/redis_cl_node
+docker run -e "REDIS_NODE_PORT=7002" --name node3 -p 7002:7002 -d husseingalal/redis_cl_node
+docker run -e "REDIS_NODE_PORT=7003" --name node4 -p 7003:7003 -d husseingalal/redis_cl_node
+docker run -e "REDIS_NODE_PORT=7004" --name node5 -p 7004:7004 -d husseingalal/redis_cl_node
+docker run -e "REDIS_NODE_PORT=7005" --name node6 -p 7005:7005 -d husseingalal/redis_cl_node
+```
 
+**OR**
 ```
 $ docker pull husseingalal/redis_cl_node
 $ docker run -d --name redis_node_1 -p 7000:7000 husseingalal/redis_cl_node
