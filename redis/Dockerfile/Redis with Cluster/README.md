@@ -1,16 +1,20 @@
 # [Redis with Cluster](https://github.com/galal-hussein/docker_redis-cl)
+## Start Nodes with Different port
+To start each node with different port change the value of the environment variable $REDIS_NODE_PORT during running the node.
 ```
 docker run -e "REDIS_NODE_PORT=6000" --name node1 -d husseingalal/redis_cl_node 
 ```
 
+**OR**
+
 ```
-# docker pull husseingalal/redis_cl_node
-# docker run -d --name redis_node_1 -p 7000:7000 husseingalal/redis_cl_node
-# docker run -d --name redis_node_2 -p 7001:7000 husseingalal/redis_cl_node
-# docker run -d --name redis_node_3 -p 7002:7000 husseingalal/redis_cl_node
-# docker run -d --name redis_node_4 -p 7003:7000 husseingalal/redis_cl_node
-# docker run -d --name redis_node_5 -p 7004:7000 husseingalal/redis_cl_node
-# docker run -d --name redis_node_6 -p 7005:7000 husseingalal/redis_cl_node
+$ docker pull husseingalal/redis_cl_node
+$ docker run -d --name redis_node_1 -p 7000:7000 husseingalal/redis_cl_node
+$ docker run -d --name redis_node_2 -p 7001:7000 husseingalal/redis_cl_node
+$ docker run -d --name redis_node_3 -p 7002:7000 husseingalal/redis_cl_node
+$ docker run -d --name redis_node_4 -p 7003:7000 husseingalal/redis_cl_node
+$ docker run -d --name redis_node_5 -p 7004:7000 husseingalal/redis_cl_node
+$ docker run -d --name redis_node_6 -p 7005:7000 husseingalal/redis_cl_node
 ```
 
 If you run redis (Docker Hub) image that is not enable cluster
