@@ -56,6 +56,12 @@ docker run -it \
   grokzen/redis-cluster
 ```
 
+#### Connecting to Cluster
+On linux, this will be the private IP address of the container which can be obtained from
+```
+docker inspect --format '{{ .NetworkSettings.IPAddress }}' <container name or ID>
+```
+
 How to run a redis docker instance with a different port, that is not cluster
 ```
 docker run -d -p 7000:7000 redis --port 7000
@@ -96,6 +102,7 @@ SO That is wrong becuase node is not clustered.
 ## Redis Cluster with master/slave replication - [How to create a cluster without redis-trib.rb file](http://pingredis.blogspot.in/2016/09/redis-cluster-how-to-create-cluster.html)
 #### 1. Create redis nodes are started in cluster mode (Redis with Cluster)
 
+[docker-redis-cluster](https://github.com/Grokzen/docker-redis-cluster)
 ```
 docker run -it \
   -p 7000:7000 \
@@ -109,6 +116,20 @@ docker run -it \
   --name redisserver \
   grokzen/redis-cluster
 ```
+
+[docker-redis-cluster](https://github.com/MyPureCloud/docker-redis-cluster)
+```
+docker run -it \
+  -p 7000:7000 \
+  -p 7001:7001 \
+  -p 7002:7002 \
+  -p 7003:7003 \
+  -p 7004:7004 \
+  -p 7005:7005 \
+  --name redisserver \
+  druotic/redis-cluster
+```
+
 
 #### 2. Check redis is indeed running.
 ```
