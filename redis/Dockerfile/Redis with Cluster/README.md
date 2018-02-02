@@ -100,8 +100,9 @@ abc@abc-To-be-filled-by-O-E-M:~$
 SO That is wrong becuase node is not clustered.
 
 ## Redis Cluster with master/slave replication - [How to create a cluster without redis-trib.rb file](http://pingredis.blogspot.in/2016/09/redis-cluster-how-to-create-cluster.html)
-#### 1. Create redis nodes are started in cluster mode (Redis with Cluster)
 
+#### 1. Create redis nodes are started in cluster mode (Redis with Cluster)
+[redis-server](https://github.com/developersworkspace/Docker-Samples/tree/master/redis)
 [docker-redis-cluster](https://github.com/eloycoto/docker-redis-cluster)
 [docker-redis-cluster](https://github.com/Grokzen/docker-redis-cluster)
 ```
