@@ -303,10 +303,12 @@ The cluster logic is handled by Predis and not phpiredis which is used only to p
    * Predis library with phpiredis extension (see #4)
      * Required Component
        * [Predis](https://github.com/nrk/predis) library
+         * composer require predis/predis
        * [phpiredis](https://github.com/nrk/phpiredis) extension
        * RPM packages: php-nrk-Predis, php-phpiredis, hiredis
    * https://community.centminmod.com/threads/how-to-install-phpiredis-php-extension.7919/
    * https://anton.logvinenko.name/en/blog/how-to-install-redis-and-redis-php-client.html
    * https://www.zybuluo.com/phper/note/248555
+   * https://github.com/cheprasov/php-redis-client/blob/master/examples/clusters.php#L73
 
 
