@@ -285,6 +285,25 @@ redis-cli -c -p 7002 dbsize
 The client is configured correctly but check from the output of phpinfo() that phpiredis is indeed loaded by PHP at runtime, the only possible explanation is that you compiled phpredis but didn't configure PHP to load the extension.
 
 The cluster logic is handled by Predis and not phpiredis which is used only to process the Redis protocol more efficiently.
-
+ * https://www.zybuluo.com/phper/note/248555
+ * https://www.sitepoint.com/speeding-up-existing-apps-with-a-redis-cache/
+ * [Redis from PHP](https://blog.remirepo.net/post/2016/11/13/Redis-from-PHP)
+   * redis extension (see #1)
+     * Required Component
+       * [redis](https://pecl.php.net/package/redis) extension
+       * RPM package: php-pecl-redis
+   * Predis library (see #2)
+     * Required Component
+       * [Predis](https://github.com/nrk/predis) library
+       * RPM package: php-nrk-Predis
+   * phpiredis extension (see #3)
+     * Required Component
+       * [phpiredis](https://github.com/nrk/phpiredis) extension
+       * RPM packages: php-phpiredis, hiredis
+   * Predis library with phpiredis extension (see #4)
+     * Required Component
+       * [Predis](https://github.com/nrk/predis) library
+       * [phpiredis](https://github.com/nrk/phpiredis) extension
+       * RPM packages: php-nrk-Predis, php-phpiredis, hiredis
 
 
