@@ -305,5 +305,6 @@ The cluster logic is handled by Predis and not phpiredis which is used only to p
        * [Predis](https://github.com/nrk/predis) library
        * [phpiredis](https://github.com/nrk/phpiredis) extension
        * RPM packages: php-nrk-Predis, php-phpiredis, hiredis
+   * https://community.centminmod.com/threads/how-to-install-phpiredis-php-extension.7919/
 
 
