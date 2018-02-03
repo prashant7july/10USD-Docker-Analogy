@@ -262,3 +262,11 @@ redis-cli -c -p 7000 dbsize
 
 redis-cli -c -p 7002 dbsize
 ```
+
+# PHP Redis Client
+* [Installing Redis, Hiredis on Ubuntu 14.04](https://gist.github.com/palpalani/99787e2bca75262f2d73fa960cc7a1fb)
+* How to run
+  * chmod +x install_predis.sh
+  * ./install_predis.sh
+
+
