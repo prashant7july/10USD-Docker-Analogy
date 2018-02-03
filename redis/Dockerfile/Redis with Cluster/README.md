@@ -269,7 +269,7 @@ redis-cli -c -p 7002 dbsize
   * chmod +x install_predis.sh
   * ./install_predis.sh
 * Error:: The "phpiredis" extension is required by this connection backend.
-  ```
+```
   git clone https://github.com/nrk/phpiredis.git
   cd phpiredis
   phpize && ./configure --enable-phpiredis
@@ -306,5 +306,6 @@ The cluster logic is handled by Predis and not phpiredis which is used only to p
        * [phpiredis](https://github.com/nrk/phpiredis) extension
        * RPM packages: php-nrk-Predis, php-phpiredis, hiredis
    * https://community.centminmod.com/threads/how-to-install-phpiredis-php-extension.7919/
+   * https://anton.logvinenko.name/en/blog/how-to-install-redis-and-redis-php-client.html
 
 
