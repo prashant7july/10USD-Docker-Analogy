@@ -268,5 +268,23 @@ redis-cli -c -p 7002 dbsize
 * How to run
   * chmod +x install_predis.sh
   * ./install_predis.sh
+* Error:: The "phpiredis" extension is required by this connection backend.
+  ```
+  git clone https://github.com/nrk/phpiredis.git
+  cd phpiredis
+  phpize && ./configure --enable-phpiredis
+  make && make install
+  
+  git clone https://github.com/nrk/phpiredis.git && \
+         cd phpiredis && \
+         phpize && \
+         ./configure --enable-phpiredis && \
+         make && \
+         sudo make install
+```
+The client is configured correctly but check from the output of phpinfo() that phpiredis is indeed loaded by PHP at runtime, the only possible explanation is that you compiled phpredis but didn't configure PHP to load the extension.
+
+The cluster logic is handled by Predis and not phpiredis which is used only to process the Redis protocol more efficiently.
+
 
 
