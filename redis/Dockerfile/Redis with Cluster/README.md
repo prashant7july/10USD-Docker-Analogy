@@ -107,6 +107,7 @@ SO That is wrong becuase node is not clustered.
 * [Redis-Cluster with shellscript](https://github.com/developersworkspace/Production-Apps/tree/master/Redis-Cluster)
 * [docker-redis-cluster](https://github.com/eloycoto/docker-redis-cluster)
 * [docker-redis-cluster](https://github.com/Grokzen/docker-redis-cluster)
+* [redis-cluster-for-tests/Dockerfile](https://github.com/cheprasov/Dockerfiles/blob/master/redis-cluster-for-tests/Dockerfile)
 ```
 docker run -it \
   -p 7000:7000 \
