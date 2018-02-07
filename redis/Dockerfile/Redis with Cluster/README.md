@@ -250,10 +250,7 @@ OK
 $ redis-cli -c -p 7005 cluster replicate 29a734fd790db093814773e12600f2c9eee2035b
 OK
 ```
-<<<<<<< HEAD
 
-=======
->>>>>>> dd9e1c1a5f963031411aaafb45b941722b2fc901
 Congratulations, your cluster is up and running. Now, you can add some dummy data in it and start playing around with it.
 ```
 redis-cli -c -p 7000 set mykey myvalue
