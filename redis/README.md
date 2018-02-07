@@ -1096,18 +1096,5 @@ docker pull jenkins
 docker run --name jenkins -d -p 49001:8080 -v $PWD/jenkins:/var/jenkins_home -t jenkins
 ```
 
-# Install RabbitMQ
-* [RabbitMQ Dockerfile for trusted automated Docker builds](https://github.com/dockerfile/rabbitmq)
-* [setup-a-rabbitmq-cluster-on-ubuntu](https://thoughtsimproved.wordpress.com/2015/01/03/tech-recipe-setup-a-rabbitmq-cluster-on-ubuntu/)
-* [php-redis-client](https://github.com/cheprasov/php-redis-client)
-
 # Install Different Dockerfile example like MongoDB
 https://github.com/dockerfile
-
-
-# Install composer
-```
-# Install composer globally
-RUN echo "Install composer globally"
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
-```

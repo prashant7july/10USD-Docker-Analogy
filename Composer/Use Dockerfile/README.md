@@ -565,3 +565,9 @@ docker run --rm -it \
 ```
 And view your website locally at http://localhost:8888/.
 
+# Install composer
+```
+# Install composer globally
+RUN echo "Install composer globally"
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+```
