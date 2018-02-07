@@ -1,16 +1,29 @@
 # [Redis with Cluster](https://github.com/galal-hussein/docker_redis-cl)
+## Start Nodes with Different port
+To start each node with different port change the value of the environment variable $REDIS_NODE_PORT during running the node.
 ```
-docker run -e "REDIS_NODE_PORT=6000" --name node1 -d husseingalal/redis_cl_node 
+$ docker run -e "REDIS_NODE_PORT=6000" --name node1 -d husseingalal/redis_cl_node
 ```
 
+**OR**
 ```
-# docker pull husseingalal/redis_cl_node
-# docker run -d --name redis_node_1 -p 7000:7000 husseingalal/redis_cl_node
-# docker run -d --name redis_node_2 -p 7001:7000 husseingalal/redis_cl_node
-# docker run -d --name redis_node_3 -p 7002:7000 husseingalal/redis_cl_node
-# docker run -d --name redis_node_4 -p 7003:7000 husseingalal/redis_cl_node
-# docker run -d --name redis_node_5 -p 7004:7000 husseingalal/redis_cl_node
-# docker run -d --name redis_node_6 -p 7005:7000 husseingalal/redis_cl_node
+docker run -e "REDIS_NODE_PORT=7000" --name node1 -p 7000:7000 -d husseingalal/redis_cl_node
+docker run -e "REDIS_NODE_PORT=7001" --name node2 -p 7001:7001 -d husseingalal/redis_cl_node
+docker run -e "REDIS_NODE_PORT=7002" --name node3 -p 7002:7002 -d husseingalal/redis_cl_node
+docker run -e "REDIS_NODE_PORT=7003" --name node4 -p 7003:7003 -d husseingalal/redis_cl_node
+docker run -e "REDIS_NODE_PORT=7004" --name node5 -p 7004:7004 -d husseingalal/redis_cl_node
+docker run -e "REDIS_NODE_PORT=7005" --name node6 -p 7005:7005 -d husseingalal/redis_cl_node
+```
+
+**OR**
+```
+$ docker pull husseingalal/redis_cl_node
+$ docker run -d --name redis_node_1 -p 7000:7000 husseingalal/redis_cl_node
+$ docker run -d --name redis_node_2 -p 7001:7000 husseingalal/redis_cl_node
+$ docker run -d --name redis_node_3 -p 7002:7000 husseingalal/redis_cl_node
+$ docker run -d --name redis_node_4 -p 7003:7000 husseingalal/redis_cl_node
+$ docker run -d --name redis_node_5 -p 7004:7000 husseingalal/redis_cl_node
+$ docker run -d --name redis_node_6 -p 7005:7000 husseingalal/redis_cl_node
 ```
 
 If you run redis (Docker Hub) image that is not enable cluster
@@ -43,6 +56,12 @@ docker run -it \
   grokzen/redis-cluster
 ```
 
+#### Connecting to Cluster
+On linux, this will be the private IP address of the container which can be obtained from
+```
+docker inspect --format '{{ .NetworkSettings.IPAddress }}' <container name or ID>
+```
+
 How to run a redis docker instance with a different port, that is not cluster
 ```
 docker run -d -p 7000:7000 redis --port 7000
@@ -67,7 +86,7 @@ redis-cli -p 7005
 ```
 
 ```
-abc@abc-To-be-filled-by-O-E-M:~$ ps aux | grep redis
+$ ps aux | grep redis
 redis      945  0.1  0.0  40136  6612 ?        Ssl  09:55   0:06 /usr/bin/redis-server 127.0.0.1:6379
 guest-t+  7541  0.1  0.1  41648  9548 ?        Ssl  11:04   0:02 redis-server *:7000
 guest-t+  8327  0.2  0.1  41648  9600 ?        Ssl  11:33   0:00 redis-server *:7001
@@ -77,14 +96,18 @@ guest-t+  8650  0.3  0.1  41648  9620 ?        Ssl  11:33   0:00 redis-server *:
 guest-t+  8750  0.3  0.1  41648  9500 ?        Ssl  11:33   0:00 redis-server *:7005
 abc       8791  0.0  0.0  14224  1028 pts/2    S+   11:33   0:00 grep --color=auto redis
 abc@abc-To-be-filled-by-O-E-M:~$ 
-
-SO That is wrong becuase node is not clustered
 ```
+SO That is wrong becuase node is not clustered.
 
-http://pingredis.blogspot.in/2016/09/redis-cluster-how-to-create-cluster.html
+## Redis Cluster with master/slave replication - [How to create a cluster without redis-trib.rb file](http://pingredis.blogspot.in/2016/09/redis-cluster-how-to-create-cluster.html)
 
-#### 1. Create redis nodes are started in cluster mode(Redis with Cluster)
-
+#### 1. Create redis nodes are started in cluster mode (Redis with Cluster)
+* [redis without cluster](https://github.com/developersworkspace/Docker-Samples/tree/master/redis)
+* [redis-cluster](https://github.com/developersworkspace/Docker-Samples/tree/master/redis-cluster)
+* [Redis-Cluster with shellscript](https://github.com/developersworkspace/Production-Apps/tree/master/Redis-Cluster)
+* [docker-redis-cluster](https://github.com/eloycoto/docker-redis-cluster)
+* [docker-redis-cluster](https://github.com/Grokzen/docker-redis-cluster)
+* [redis-cluster-for-tests/Dockerfile](https://github.com/cheprasov/Dockerfiles/blob/master/redis-cluster-for-tests/Dockerfile)
 ```
 docker run -it \
   -p 7000:7000 \
@@ -99,7 +122,21 @@ docker run -it \
   grokzen/redis-cluster
 ```
 
-#### 2. check redis is indeed running
+[docker-redis-cluster](https://github.com/MyPureCloud/docker-redis-cluster)
+```
+docker run -it \
+  -p 7000:7000 \
+  -p 7001:7001 \
+  -p 7002:7002 \
+  -p 7003:7003 \
+  -p 7004:7004 \
+  -p 7005:7005 \
+  --name redisserver \
+  druotic/redis-cluster
+```
+
+
+#### 2. Check redis is indeed running.
 ```
 $ ps -ef | grep redis
 ```
@@ -200,16 +237,10 @@ ec4af96fce158f77652b496351829d61b9244c5c 127.0.0.1:7003 slave 61977136fbf3009707
 a9e429a1c67d1ef79894d39b9677dc01baa78900 127.0.0.1:7001 master - 0 1517475910190 2 connected 5461-10922
 61977136fbf3009707c8b9d3fff058781fb5c47c 172.17.0.2:7000 myself,master - 0 0 1 connected 0-5460
 29a734fd790db093814773e12600f2c9eee2035b 172.17.0.2:7002 master - 0 1517475910693 3 connected 10923-16383
-abc@abc-To-be-filled-by-O-E-M:~$ 
 ```
 
 #### 5: Assign Slaves to masters.
-Note that we had assigned slots to 7000, 7001, 7002, and plan to make the other nodes as their slaves.
-Slaves are assigned using **cluster replicate** command as described here.
-The syntax of the command is
-"redis-cli -c -p <port_of_slave> cluster replicate <node_id_of_its_master>"
-To find the node id of masters, we can use "cluster nodes" command and note the ids corresponding to ports 7000, 7001, 7002.
-
+Note that we had assigned slots to 7000, 7001, 7002, and plan to make the other nodes as their slaves. Slaves are assigned using **cluster replicate** command as described here. The syntax of the command is **redis-cli -c -p <port_of_slave> cluster replicate <node_id_of_its_master>** To find the node id of masters, we can use "cluster nodes" command and note the ids corresponding to ports 7000, 7001, 7002.
 
 ```
 $ redis-cli -c -p 7003 cluster replicate 61977136fbf3009707c8b9d3fff058781fb5c47c
@@ -219,7 +250,10 @@ OK
 $ redis-cli -c -p 7005 cluster replicate 29a734fd790db093814773e12600f2c9eee2035b
 OK
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> dd9e1c1a5f963031411aaafb45b941722b2fc901
 Congratulations, your cluster is up and running. Now, you can add some dummy data in it and start playing around with it.
 ```
 redis-cli -c -p 7000 set mykey myvalue
@@ -232,3 +266,54 @@ redis-cli -c -p 7000 dbsize
 
 redis-cli -c -p 7002 dbsize
 ```
+
+# PHP Redis Client
+* [Installing Redis, Hiredis on Ubuntu 14.04](https://gist.github.com/palpalani/99787e2bca75262f2d73fa960cc7a1fb)
+* How to run
+  * chmod +x install_predis.sh
+  * ./install_predis.sh
+* Error:: The "phpiredis" extension is required by this connection backend.
+```
+  git clone https://github.com/nrk/phpiredis.git
+  cd phpiredis
+  phpize && ./configure --enable-phpiredis
+  make && make install
+  
+  git clone https://github.com/nrk/phpiredis.git && \
+         cd phpiredis && \
+         phpize && \
+         ./configure --enable-phpiredis && \
+         make && \
+         sudo make install
+```
+The client is configured correctly but check from the output of phpinfo() that phpiredis is indeed loaded by PHP at runtime, the only possible explanation is that you compiled phpredis but didn't configure PHP to load the extension.
+
+The [**cluster logic is handled by Predis**](https://github.com/nrk/predis/blob/master/FAQ.md#speaking-about-performances) and not [**phpiredis which is used only to process the Redis protocol more efficiently**](https://github.com/nrk/predis/blob/master/FAQ.md#i-am-convinced-but-performances-for-multi-bulk-responses-are-still-worse).
+ * https://www.zybuluo.com/phper/note/248555
+ * https://www.sitepoint.com/speeding-up-existing-apps-with-a-redis-cache/
+ * [Redis from PHP](https://blog.remirepo.net/post/2016/11/13/Redis-from-PHP)
+   * redis extension (see #1)
+     * Required Component
+       * [redis](https://pecl.php.net/package/redis) extension
+       * RPM package: php-pecl-redis
+   * Predis library (see #2)
+     * Required Component
+       * [Predis](https://github.com/nrk/predis) library
+       * RPM package: php-nrk-Predis
+   * phpiredis extension (see #3)
+     * Required Component
+       * [phpiredis](https://github.com/nrk/phpiredis) extension
+       * RPM packages: php-phpiredis, hiredis
+   * Predis library with phpiredis extension (see #4)
+     * Required Component
+       * [Predis](https://github.com/nrk/predis) library
+         * composer require predis/predis
+       * [phpiredis](https://github.com/nrk/phpiredis) extension
+       * RPM packages: php-nrk-Predis, php-phpiredis, hiredis
+   * https://community.centminmod.com/threads/how-to-install-phpiredis-php-extension.7919/
+   * https://anton.logvinenko.name/en/blog/how-to-install-redis-and-redis-php-client.html
+   * https://www.zybuluo.com/phper/note/248555
+   * https://github.com/cheprasov/php-redis-client/blob/master/examples/clusters.php#L73
+   * https://github.com/nrk/predis/blob/master/FAQ.md#speaking-about-performances
+
+
