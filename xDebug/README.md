@@ -10,3 +10,4 @@
 * [docker-setup-for-php-debugging](https://www.arroyolabs.com/2017/10/amazing-docker-setup-for-php-debugging/)
 * [xdebug-for-a-cli-app-in-docker-and-phpstorm](https://500.keboola.com/xdebug-for-a-cli-app-in-docker-and-phpstorm-66a939c2c603)
 * [docker-support-in-phpstorm](https://blog.jetbrains.com/phpstorm/2015/10/docker-support-in-phpstorm/)
+* [debugging client/server vim](https://mutelight.org/minimal-guide-to-debugging-php-with-xdebug-and-vim)
