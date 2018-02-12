@@ -1,0 +1,12 @@
+# Install XDebug
+* [Remote xdebug](https://xdebug.org/docs/remote)
+* [debug-php-docker-container-idea-phpstorm/](https://blog.philipphauer.de/debug-php-docker-container-idea-phpstorm/)
+* [xdebug-with-intellij](https://medium.com/ihme-tech/using-xdebug-with-intellij-inside-a-docker-container-dc8cbd844dc5)
+* [xdebug with php](https://lekode.com/2017/12/18/debugging-your-php-application-inside-a-docker-environment-using-xdebug/)
+* [docker-xdebug](https://www.arroyolabs.com/2016/10/docker-xdebug/)
+* [Debugging PHP Running in a Docker Container with XDebug and PHPStorm](https://gist.github.com/mindscratch/5bfc0578feb7d5d534366c680b422f1b)
+* [getting-xdebug-working](https://serversforhackers.com/c/getting-xdebug-working)
+* [xdebug-with-docker-and-phpstorm](https://medium.com/@pablofmorales/xdebug-with-docker-and-phpstorm-786da0d0fad2)
+* [docker-setup-for-php-debugging](https://www.arroyolabs.com/2017/10/amazing-docker-setup-for-php-debugging/)
+* [xdebug-for-a-cli-app-in-docker-and-phpstorm](https://500.keboola.com/xdebug-for-a-cli-app-in-docker-and-phpstorm-66a939c2c603)
+* [docker-support-in-phpstorm](https://blog.jetbrains.com/phpstorm/2015/10/docker-support-in-phpstorm/)
