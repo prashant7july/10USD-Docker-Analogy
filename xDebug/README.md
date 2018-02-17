@@ -11,3 +11,8 @@
 * [xdebug-for-a-cli-app-in-docker-and-phpstorm](https://500.keboola.com/xdebug-for-a-cli-app-in-docker-and-phpstorm-66a939c2c603)
 * [docker-support-in-phpstorm](https://blog.jetbrains.com/phpstorm/2015/10/docker-support-in-phpstorm/)
 * [debugging client/server vim](https://mutelight.org/minimal-guide-to-debugging-php-with-xdebug-and-vim)
+* [xdebug-in-docker](https://serversforhackers.com/s/xdebug-in-docker)
+* [docker-wordpress-xdebug](https://github.com/KaiHofstetter/docker-wordpress-xdebug)
+* [Debug PHP in Docker with PHPStorm and Xdebug](https://gist.github.com/chadrien/c90927ec2d160ffea9c4)
+* [Setup Visual Studio Code for using Xdebug](https://medium.com/@sbuckpesch/setup-xdebug-on-phpstorm-and-visual-studio-code-using-docker-on-windows-hyper-v-9c385dd732c9)
+* [docker-init](https://github.com/apparena/docker-init)
