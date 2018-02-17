@@ -11,6 +11,9 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+# Add Composer
+# RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 RUN apt-get update \
     && apt-get install -y curl zip unzip git software-properties-common sqlite3 \
     && add-apt-repository -y ppa:ondrej/php \
