@@ -19,10 +19,30 @@ ENV LC_ALL en_US.UTF-8
 # RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 
-# Basic packages
-# git   apt-get install -y sudo software-properties-common nano curl \
-# build-essential dos2unix gcc git git-flow libmcrypt4 libpcre3-dev apt-utils \
-# make python2.7-dev python-pip re2c supervisor unattended-upgrades whois vim zip unzip
+# Basic packages [https://github.com/shincoder/homestead-docker/blob/master/provision.sh]
+# RUN apt-get install -y \
+#     sudo \
+#     software-properties-common \
+#     nano \
+#     curl \
+#     build-essential \
+#     dos2unix \
+#     gcc \
+#     git \
+#     git-flow \
+#     libmcrypt4 \
+#     libpcre3-dev \
+#     apt-utils \
+#     make \
+#     python2.7-dev \
+#     python-pip \
+#     re2c \
+#     supervisor \
+#     unattended-upgrades \
+#     whois \
+#     vim \
+#     zip \
+#     unzip
 
 # Install Ubuntu packages
 # RUN apt-get install -y \
