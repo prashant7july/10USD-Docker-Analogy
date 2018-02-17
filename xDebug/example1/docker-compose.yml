@@ -1,0 +1,10 @@
+version: '2'
+services:
+  app:
+    build:
+      context: .
+    image: xdebug-example:latest
+    volumes:
+     - ./app:/var/www/html
+    ports:
+     - "80:80"
