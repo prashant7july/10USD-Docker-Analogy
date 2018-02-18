@@ -16,3 +16,5 @@
 * [Debug PHP in Docker with PHPStorm and Xdebug](https://gist.github.com/chadrien/c90927ec2d160ffea9c4)
 * [Setup Visual Studio Code for using Xdebug](https://medium.com/@sbuckpesch/setup-xdebug-on-phpstorm-and-visual-studio-code-using-docker-on-windows-hyper-v-9c385dd732c9)
 * [docker-init](https://github.com/apparena/docker-init)
+* [Debugging PHP Running in a Docker Container with XDebug](https://gist.github.com/mindscratch/5bfc0578feb7d5d534366c680b422f1b)
+* [Docker-VS-code-Xdebug](http://blog.leanote.com/post/gm8300130/Day-51-Docker-VS-code-Xdebug)
