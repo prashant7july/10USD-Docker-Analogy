@@ -98,6 +98,15 @@ RUN apt-get update \
 
 COPY xdebug.ini /etc/php/7.0/mods-available/xdebug.ini
 
+# OR https://gist.github.com/mindscratch/5bfc0578feb7d5d534366c680b422f1b
+# RUN echo "xdebug.idekey = PHPSTORM" >> /etc/php.d/xdebug.ini && 
+# echo "xdebug.default_enable = 0" >> /etc/php.d/xdebug.ini && 
+# echo "xdebug.remote_enable = 1" >> /etc/php.d/xdebug.ini && 
+# echo "xdebug.remote_autostart = 0" >> /etc/php.d/xdebug.ini && 
+# echo "xdebug.remote_connect_back = 0" >> /etc/php.d/xdebug.ini && 
+# echo "xdebug.profiler_enable = 0" >> /etc/php.d/xdebug.ini && 
+# echo "xdebug.remote_host = 10.254.254.254" >> /etc/php.d/xdebug.ini
+
 COPY start-container /usr/local/bin/start-container
 RUN chmod +x usr/local/bin/start-container
 
