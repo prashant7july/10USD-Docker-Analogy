@@ -18,6 +18,14 @@ ENV LC_ALL en_US.UTF-8
 # Add Composer
 # RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install composer
+# php -r "readfile('https://getcomposer.org/installer');" | php && \
+#   mv composer.phar /usr/bin/composer && \
+#   chmod +x /usr/bin/composer
+
+# Or Other Way
+# php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
+ 
 
 # Basic packages [https://github.com/shincoder/homestead-docker/blob/master/provision.sh]
 # RUN apt-get install -y \
