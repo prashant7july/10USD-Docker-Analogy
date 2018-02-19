@@ -1,4 +1,4 @@
-# Install XDebug
+# Reference URL for XDebug
 * [getting-xdebug-working](https://serversforhackers.com/c/getting-xdebug-working)
 
 #### Build the image and run it
