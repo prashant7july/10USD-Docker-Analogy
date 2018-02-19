@@ -19,3 +19,4 @@
 * [Debugging PHP Running in a Docker Container with XDebug](https://gist.github.com/mindscratch/5bfc0578feb7d5d534366c680b422f1b)
 * [Docker-VS-code-Xdebug](http://blog.leanote.com/post/gm8300130/Day-51-Docker-VS-code-Xdebug)
 * [PHP & NODE](https://github.com/hitalos/laravel)
+* [shell xdebug](https://github.com/laradock/laradock/blob/master/php-fpm/xdebug)
