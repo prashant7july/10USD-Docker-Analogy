@@ -34,4 +34,9 @@ fi
 
 
 #Reference - https://stackoverflow.com/questions/31530239/use-rabbitmqadmin-in-docker
-# https://github.com/smallfish/rabbitmq-http
+# https://github.com/smallfish/rabbitmq-httpgit diff
+# curl -u stage:ZmEGNWrB7p7ws5Vl -i -X POST http://172.16.245.15:15672/api/queues -d {"name": "q1"}
+# curl -u guest:guest -XGET http://localhost:15672/api/queues
+
+# https://gist.github.com/vmwarecode/358097f09e1206b69d79
+# https://pulse.mozilla.org/api/
