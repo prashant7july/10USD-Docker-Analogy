@@ -32,4 +32,46 @@ docker-compose up -d nginx php-fpm mysql phpmyadmin
  * Service 'mysql' failed to build on fresh install (Solution - chmod -R 755 data/)
  * ERROR: Service 'mysql' failed to build: Please provide a source image with `from` prior to commit  (Solution - https://fabianlee.org/2017/03/07/docker-installing-docker-ce-on-ubuntu-14-04-and-16-04/)
 
+**Issues 3**
+```
+WARNING: Image for service nginx was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
+Creating laradock_mysql_1 ... 
+Creating laradock_applications_1 ... 
+Creating laradock_applications_1
+Creating laradock_mysql_1 ... error
+
+ERROR: for laradock_mysql_1  Cannot start service mysql: driver failed programming external connectivity on endpoint laradock_mysql_1 (e1becd597ccfd3e904f40709fb713cb02b7d40ed29c73efbe663ee0add5ad1ab): Error starting userland proxy: listen tcp 0.0.0.0:3306: bind: address already in use
+Creating laradock_workspace_1 ... 
+Creating laradock_workspace_1 ... done
+Creating laradock_php-fpm_1 ... 
+Creating laradock_php-fpm_1 ... done
+Creating laradock_nginx_1 ... 
+Creating laradock_nginx_1 ... error
+
+ERROR: for laradock_nginx_1  Cannot start service nginx: driver failed programming external connectivity on endpoint laradock_nginx_1 (02d72d652131fd1d81379131d76afd810bcec9780301991cd542d1931101f6a5): Error starting userland proxy: listen tcp 0.0.0.0:80: listen: address already in use
+
+ERROR: for nginx  Cannot start service nginx: driver failed programming external connectivity on endpoint laradock_nginx_1 (02d72d652131fd1d81379131d76afd810bcec9780301991cd542d1931101f6a5): Error starting userland proxy: listen tcp 0.0.0.0:80: listen: address already in use
+
+ERROR: for mysql  Cannot start service mysql: driver failed programming external connectivity on endpoint laradock_mysql_1 (e1becd597ccfd3e904f40709fb713cb02b7d40ed29c73efbe663ee0add5ad1ab): Error starting userland proxy: listen tcp 0.0.0.0:3306: bind: address already in use
+ERROR: Encountered errors while bringing up the project.
+````
+**Issues 3**
+```
+0.0.0.0:80
+0.0.0.0:3306
+bind: address already in use
+
+you host os already run service bind port 80, 3306.
+stop related service then run docker-compose up again.
+
+### PHP MY ADMIN
+Change PMA_PORT=8080 to PMA_PORT=8081
+
+### MYSQL
+Change MYSQL_PORT=3306 TO MYSQL_PORT=3307
+
+### NGINX
+Change NGINX_HOST_HTTP_PORT=80 TO NGINX_HOST_HTTP_PORT=81
+```
+
 
