@@ -19,8 +19,8 @@ $ cp env-example .env
 ```
 
 Then open the. Env file to modify the additional config.
-* LineNo 8 to run to our zendframework folder by adding zendframework to APPLICATION = ../zendframework
-* LineNo13 Now I change the path to the volume named data we have created. DATA_SAVE_PATH = ../data
+ * LineNo 8 to run to our zendframework folder by adding zendframework to APPLICATION = ../zendframework
+ * LineNo13 Now I change the path to the volume named data we have created. DATA_SAVE_PATH = ../data
 
 **nginx/sites/default.conf** 
 change **root /var/www/public;** => **root /var/www;** (in LineNo 7)
@@ -29,7 +29,7 @@ change **root /var/www/public;** => **root /var/www;** (in LineNo 7)
 docker-compose up -d nginx php-fpm mysql phpmyadmin
 
 **Issues**
-a) Service 'mysql' failed to build on fresh install (Solution - chmod -R 755 data/)
-b) ERROR: Service 'mysql' failed to build: Please provide a source image with `from` prior to commit  (Solution - https://fabianlee.org/2017/03/07/docker-installing-docker-ce-on-ubuntu-14-04-and-16-04/)
+ * Service 'mysql' failed to build on fresh install (Solution - chmod -R 755 data/)
+ * ERROR: Service 'mysql' failed to build: Please provide a source image with `from` prior to commit  (Solution - https://fabianlee.org/2017/03/07/docker-installing-docker-ce-on-ubuntu-14-04-and-16-04/)
 
 
