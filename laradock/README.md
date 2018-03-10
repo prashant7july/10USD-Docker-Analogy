@@ -92,6 +92,22 @@ and add server_name (your custom domain)
     server_name yourdomain.com;
 ```
 
+#### Use custom Domain (instead of the Docker IP)
+
+Assuming your custom domain is laravel.dev
+
+1 - Open your /etc/hosts file and map your localhost address 127.0.0.1 to the laravel.dev domain, by adding the following:
+
+127.0.0.1    laravel.dev
+127.0.0.1    yourdomain.com
+
+2 - Open your browser and visit {http://laravel.dev}{http://yourdomain.com}
+
+Optionally you can define the server name in the nginx config file, like this:
+
+server_name laravel.dev;
+server_name yourdomain.com;
+
 #### 2 - Enter the workspace container to execute the command like (composer etc)
 ```
 abc@abc-To-be-filled-by-O-E-M:/var/www/html/php/dockertest/laradock$ docker-compose exec workspace bash
