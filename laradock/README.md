@@ -28,7 +28,7 @@ change **root /var/www/public;** => **root /var/www;** (in LineNo 7)
 **Run** 
 docker-compose up -d nginx php-fpm mysql phpmyadmin
 
-**Issues**
+**Issues & their Solution**
  * Service 'mysql' failed to build on fresh install (Solution - chmod -R 755 data/)
  * ERROR: Service 'mysql' failed to build: Please provide a source image with `from` prior to commit  (Solution - https://fabianlee.org/2017/03/07/docker-installing-docker-ce-on-ubuntu-14-04-and-16-04/)
 
