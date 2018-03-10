@@ -1,4 +1,5 @@
 # Project structure:
+https://gitlab.com/jorgediz/laradoc/tree/multiple-projects
 ``` 
 myproject.
 ├── data -> Create a folder for storing various data of the project, such as database file, logs, (chmod -R 0777 data/ to remove issues Service 'mysql' failed to build on fresh install )
@@ -25,7 +26,7 @@ Then open the. Env file to modify the additional config.
 **nginx/sites/default.conf** 
 change **root /var/www/public;** => **root /var/www;** (in LineNo 7)
 
-**Run** 
+#### 1 - Run Containers:(Make sure you are in the laradock folder before running the docker-composer commands)
 docker-compose up -d nginx php-fpm mysql phpmyadmin
 
 **Issues & their Solution**
@@ -74,7 +75,7 @@ Change MYSQL_PORT=3306 TO MYSQL_PORT=3307
 Change NGINX_HOST_HTTP_PORT=80 TO NGINX_HOST_HTTP_PORT=81
 ```
 
-# Enter the workspace container and after that execute the composer install 
+#### 2 - Enter the workspace container to execute the command like (composer etc)
 ```
 abc@abc-To-be-filled-by-O-E-M:/var/www/html/php/dockertest/laradock$ docker-compose exec workspace bash
 root@0293804886b4:/var/www# ls -l
