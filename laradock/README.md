@@ -74,4 +74,17 @@ Change MYSQL_PORT=3306 TO MYSQL_PORT=3307
 Change NGINX_HOST_HTTP_PORT=80 TO NGINX_HOST_HTTP_PORT=81
 ```
 
-
+# Enter the workspace container and after that execute the composer install 
+```
+abc@abc-To-be-filled-by-O-E-M:/var/www/html/php/dockertest/laradock$ docker-compose exec workspace bash
+root@0293804886b4:/var/www# ls -l
+total 308
+-rw-rw-r-- 1 laradock laradock 276914 Mar  9 07:21 CHANGELOG.md
+-rw-rw-r-- 1 laradock laradock   3450 Mar  9 07:21 composer.json
+-rw-rw-r-- 1 laradock laradock   2378 Mar  9 07:21 CONDUCT.md
+-rw-rw-r-- 1 laradock laradock   9798 Mar  9 07:21 CONTRIBUTING.md
+-rw-rw-r-- 1 laradock laradock   1517 Mar  9 07:21 LICENSE.md
+-rw-rw-r-- 1 laradock laradock   7935 Mar  9 07:21 README.md
+drwxrwxr-x 2 laradock laradock   4096 Mar  9 07:21 resources
+root@0293804886b4:/var/www# composer install
+```
