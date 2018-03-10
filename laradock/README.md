@@ -75,6 +75,23 @@ Change MYSQL_PORT=3306 TO MYSQL_PORT=3307
 Change NGINX_HOST_HTTP_PORT=80 TO NGINX_HOST_HTTP_PORT=81
 ```
 
+#### Serve Site With NGINX (HTTP ONLY)
+```
+Go back to command line
+
+$laradock# cd nginx
+$laradock/nginx# vim laravel.conf
+
+remove default_server
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+and add server_name (your custom domain)
+    listen 81;
+    listen [::]:81 ipv6only=on;
+    server_name yourdomain.com;
+```
+
 #### 2 - Enter the workspace container to execute the command like (composer etc)
 ```
 abc@abc-To-be-filled-by-O-E-M:/var/www/html/php/dockertest/laradock$ docker-compose exec workspace bash
