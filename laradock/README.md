@@ -55,7 +55,7 @@ ERROR: for nginx  Cannot start service nginx: driver failed programming external
 ERROR: for mysql  Cannot start service mysql: driver failed programming external connectivity on endpoint laradock_mysql_1 (e1becd597ccfd3e904f40709fb713cb02b7d40ed29c73efbe663ee0add5ad1ab): Error starting userland proxy: listen tcp 0.0.0.0:3306: bind: address already in use
 ERROR: Encountered errors while bringing up the project.
 ````
-**Issues 3**
+**Solution**
 ```
 0.0.0.0:80
 0.0.0.0:3306
