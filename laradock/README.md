@@ -4,7 +4,7 @@ https://gitlab.com/jorgediz/laradoc/tree/multiple-projects
 myproject.
 ├── data -> Create a folder for storing various data of the project, such as database file, logs, (chmod -R 0777 data/ to remove issues Service 'mysql' failed to build on fresh install )
 ├── laradock -> git clone https://github.com/laradock/laradock.git
-└── zendframework -> git clone https://github.com/zendframework/zendframework.git
+└── zendframework -> git clone https://github.com/zendframework/zendframework.git OR https://github.com/akrabat/zf2-tutorial
     ├── CHANGELOG.md
     ├── composer.json
     ├── CONDUCT.md
@@ -23,7 +23,7 @@ Then open the. Env file to modify the additional config.
  * LineNo 8 to run to our zendframework folder by adding zendframework to APPLICATION = ../zendframework
  * LineNo13 Now I change the path to the volume named data we have created. DATA_SAVE_PATH = ../data
 
-**nginx/sites/default.conf** 
+**nginx/sites/default.conf**
 change **root /var/www/public;** => **root /var/www;** (in LineNo 7)
 
 #### 1 - Run Containers:(Make sure you are in the laradock folder before running the docker-composer commands)
@@ -74,6 +74,7 @@ Change MYSQL_PORT=3306 TO MYSQL_PORT=3307
 ### NGINX
 Change NGINX_HOST_HTTP_PORT=80 TO NGINX_HOST_HTTP_PORT=81
 
+### nginx/sites/default.conf
 Modify default_server
     listen 81 default_server;
     listen [::]:81 default_server ipv6only=on;
