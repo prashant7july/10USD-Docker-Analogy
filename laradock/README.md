@@ -73,7 +73,13 @@ Change MYSQL_PORT=3306 TO MYSQL_PORT=3307
 
 ### NGINX
 Change NGINX_HOST_HTTP_PORT=80 TO NGINX_HOST_HTTP_PORT=81
+
+Modify default_server
+    listen 81 default_server;
+    listen [::]:81 default_server ipv6only=on;
 ```
+
+And you can simply curl using curl localhost:81
 
 #### Serve Site With NGINX (HTTP ONLY)
 ```
