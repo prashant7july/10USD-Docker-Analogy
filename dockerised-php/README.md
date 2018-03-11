@@ -1,4 +1,5 @@
 The Docker setup for PHP applications using PHP7-FPM and Nginx described in http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm
+Docker Connecting PHP container to MySQL - https://stackoverflow.com/questions/44991743/docker-connecting-php-container-to-mysql
 
 ## Instructions
 1. Checkout the repository
