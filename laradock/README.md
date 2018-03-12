@@ -174,3 +174,5 @@ listen [::]:80;
 ssl_certificate     /etc/nginx/ssl/YOURLOCALDOMAIN.local.crt;
 ssl_certificate_key /etc/nginx/ssl/YOURLOCALDOMAIN.local.key;
 ```
+
+https://github.com/laradock/laradock/issues/977
