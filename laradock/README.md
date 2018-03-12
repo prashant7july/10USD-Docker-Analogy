@@ -94,14 +94,21 @@ My .env differences:
 
 $ diff -f env-example .env
 c8
-APPLICATION=../test/
+APPLICATION=../zendframework
+.
 c23
-DATA_SAVE_PATH=/volume1/docker/laradock/data
-c36
-DOCKER_HOST_IP=172.17.0.1
-c126 127
-NGINX_HOST_HTTP_PORT=8081
-NGINX_HOST_HTTPS_PORT=8082
+DATA_SAVE_PATH=../data
+.
+c134 135
+NGINX_HOST_HTTP_PORT=8082
+NGINX_HOST_HTTPS_PORT=8083
+.
+c157
+MYSQL_PORT=3307
+.
+c251
+PMA_PORT=8081
+.
 ```
 
 #### Serve Site With NGINX (HTTP ONLY)
