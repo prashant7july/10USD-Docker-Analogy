@@ -77,21 +77,20 @@ Change NGINX_HOST_HTTP_PORT=8082 TO NGINX_HOST_HTTP_PORT=8083
 
 And you can simply curl using curl localhost:8082
 
-## Issues getting 
+#### Issues getting 
 403 Forbidden
 nginx
 
-## Solution:
+#### Solution:
 
 Just add index.php with phpinfo(); in zendframework directory
-
+Then run the below command
 ```
 docker-compose up -d --force-recreate --build nginx
 ```
 
+#### My .env differences:
 ```
-My .env differences:
-
 $ diff -f env-example .env
 c8
 APPLICATION=../zendframework
