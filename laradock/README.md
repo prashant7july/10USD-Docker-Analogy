@@ -144,3 +144,32 @@ total 308
 drwxrwxr-x 2 laradock laradock   4096 Mar  9 07:21 resources
 root@0293804886b4:/var/www# composer install
 ```
+
+
+## https://github.com/laradock/laradock/issues/152
+## To enable self-signed certificates, follow this steps:
+#### 1 - add this lines to your nginx Dockerfile:
+
+```
+# install openssl
+RUN apk add --no-cache openssl
+
+# create a folder for the keys
+RUN mkdir /etc/nginx/ssl 2> /dev/null
+
+# generate the keys for your local domain
+RUN openssl genrsa -out "/etc/nginx/ssl/YOURLOCALDOMAIN.key" 2048 \
+    && openssl req -new -key "/etc/nginx/ssl/YOURLOCALDOMAIN.key" -out "/etc/nginx/ssl/YOURLOCALDOMAIN.csr" -subj "/CN=YOURLOCALDOMAIN/O=YOURCOMPANYNAME/C=UK" \
+    && openssl x509 -req -days 365 -in "/etc/nginx/ssl/YOURLOCALDOMAIN.csr" -signkey "/etc/nginx/ssl/YOURLOCALDOMAIN.key" -out "/etc/nginx/ssl/YOURLOCALDOMAIN.crt"
+```
+
+#### 2 - update your site.conf file:
+
+```
+listen 80;
+listen 443 ssl;
+listen [::]:80;
+
+ssl_certificate     /etc/nginx/ssl/YOURLOCALDOMAIN.local.crt;
+ssl_certificate_key /etc/nginx/ssl/YOURLOCALDOMAIN.local.key;
+```
