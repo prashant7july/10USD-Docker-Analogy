@@ -308,9 +308,7 @@ server {
 127.0.0.1  phpshop.dev
 127.0.0.1  phpcrm.dev
 127.0.0.1  nonlaravelapp.dev
-```
-
-```
+OR
 sudo sh -c 'echo "127.0.0.1 http://phpshop.dev" >> /etc/hosts'
 sudo sh -c 'echo "127.0.0.1 http://phpcrm.dev" >> /etc/hosts'
 sudo sh -c 'echo "127.0.0.1 http://nonlaravelapp.dev" >> /etc/hosts'
