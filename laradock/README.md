@@ -198,11 +198,13 @@ https://github.com/laradock/laradock/issues/977
   + public
 + nonlaravelapp
   - index.php
+  
 // file .env
 APPLICATION=../
 cp nginx/sites/project-1.conf.example nginx/sites/phpshop.conf
 cp nginx/sites/project-1.conf.example nginx/sites/phpcrm.conf
 cp nginx/sites/project-1.conf.example nginx/sites/nonlaravelapp.conf
+
 // edit phpshop.conf
 server {
     listen 80;
@@ -235,6 +237,7 @@ server {
         log_not_found off;
     }
 }
+
 // edit phpcrm.conf
 server {
     listen 80;
@@ -267,6 +270,7 @@ server {
         log_not_found off;
     }
 }
+
 // edit nonlaravelapp.conf
 server {
     listen 80;
@@ -299,6 +303,7 @@ server {
         log_not_found off;
     }
 }
+
 // edit host os /etc/hosts and add IP/Hostname mapping
 127.0.0.1  phpshop.dev
 127.0.0.1  phpcrm.dev
