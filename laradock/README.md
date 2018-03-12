@@ -313,3 +313,101 @@ sudo sh -c 'echo "127.0.0.1 http://phpshop.dev" >> /etc/hosts'
 sudo sh -c 'echo "127.0.0.1 http://phpcrm.dev" >> /etc/hosts'
 sudo sh -c 'echo "127.0.0.1 http://nonlaravelapp.dev" >> /etc/hosts'
 ```
+
+# Single Project Setup
+
+```
+// folder structure
++ laradock
++ zf2-tutorial
+  + public
++ data
+
+$ diff -f env-example .env
+
+c8
+APPLICATION=../
+.
+c23
+DATA_SAVE_PATH=../data
+.
+c134 135
+NGINX_HOST_HTTP_PORT=8082
+NGINX_HOST_HTTPS_PORT=8083
+.
+c157
+MYSQL_PORT=3307
+.
+c251
+PMA_PORT=8081
+.
+
+// file .env
+APPLICATION=../
+
+$ cp nginx/sites/laravel.conf.example nginx/sites/zf2-tutorial.conf
+
+server {
+
+    listen 80;
+    listen [::]:80;
+
+    server_name zf2-tutorial.dev;
+    root /var/www/zf2-tutorial/public;
+    index index.php index.html index.htm;
+
+    location / {
+         try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-upstream;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt/;
+        log_not_found off;
+    }
+
+    error_log /var/log/nginx/zf2-tutorial_error.log;
+    access_log /var/log/nginx/zf2-tutorial_access.log;
+}
+```
+
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker rmi $(docker images -q)
+
+docker-compose up -d nginx php-fpm mysql phpmyadmin
+#### Issues
+Building mysql
+Step 1/10 : ARG MYSQL_VERSION=8.0
+Step 2/10 : FROM mysql:${MYSQL_VERSION}
+ERROR: Service 'mysql' failed to build: Get https://registry-1.docker.io/v2/: net/http: TLS handshake timeout
+
+#### Solution
+May be network issues so please try again same command 
+```
+docker-compose up -d nginx php-fpm mysql phpmyadmin
+```
+
+// edit host os /etc/hosts and add IP/Hostname mapping
+127.0.0.1  zf2-tutorial.dev
+OR
+sudo sh -c 'echo "127.0.0.1 http://zf2-tutorial.dev" >> /etc/hosts'
+
+http://localhost:8082/ OR curl localhost:8082
+
+
