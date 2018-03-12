@@ -122,6 +122,7 @@ Assuming your custom domain is laravel.dev
 
 127.0.0.1    laravel.dev
 127.0.0.1    yourdomain.com
+sudo sh -c 'echo "127.0.0.1 http://dockerzend.dev" >> /etc/hosts'
 
 2 - Open your browser and visit {http://laravel.dev}{http://yourdomain.com}
 
