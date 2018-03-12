@@ -72,12 +72,7 @@ Change PMA_PORT=8080 to PMA_PORT=8081
 Change MYSQL_PORT=3306 TO MYSQL_PORT=3307
 
 ### NGINX
-Change NGINX_HOST_HTTP_PORT=80 TO NGINX_HOST_HTTP_PORT=81
-
-### nginx/sites/default.conf
-Modify default_server
-    listen 81 default_server;
-    listen [::]:81 default_server ipv6only=on;
+Change NGINX_HOST_HTTP_PORT=8082 TO NGINX_HOST_HTTP_PORT=8083
 ```
 
 And you can simply curl using curl localhost:81
