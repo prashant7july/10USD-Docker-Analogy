@@ -75,7 +75,12 @@ Change MYSQL_PORT=3306 TO MYSQL_PORT=3307
 Change NGINX_HOST_HTTP_PORT=8082 TO NGINX_HOST_HTTP_PORT=8083
 ```
 
-And you can simply curl using curl localhost:81
+And you can simply curl using curl localhost:8082
+
+```
+docker-compose up -d --force-recreate --build nginx
+```
+Just add index.php with phpinfo(); in zendframework directory
 
 ```
 My .env differences:
