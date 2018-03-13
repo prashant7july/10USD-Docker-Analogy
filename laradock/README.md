@@ -410,4 +410,73 @@ sudo sh -c 'echo "127.0.0.1 http://zf2-tutorial.dev" >> /etc/hosts'
 
 http://localhost:8082/ OR curl localhost:8082
 
+#### Single Project Run
+```
+// folder structure
++ laradock [Docker Library - git clone https://github.com/laradock/laradock.git]
++ zf2-tutorial(git clone https://github.com/akrabat/zf2-tutorial)
+  + public
+  - index.php [Resolving issues 403 Forbidden nginx when APPLICATION=../ in .env & root /var/www/nonlaravelapp; in nginx/sites/zf2-tutorial.conf]
++ data [Create a folder for storing various data of the project, such as database file, logs, (chmod -R 0777 data/ to remove issue - Service 'mysql' failed to build on fresh install)]
+  
 
+$ cd laradock
+$ cp env-example .env [Modify As below]
+$ diff -f env-example .env
+
+c23
+DATA_SAVE_PATH=../data
+.
+c134 135
+NGINX_HOST_HTTP_PORT=8082
+NGINX_HOST_HTTPS_PORT=8083
+.
+c157
+MYSQL_PORT=3307
+.
+c251
+PMA_PORT=8081
+.
+
+
+Create zf2-tutorial.conf in nginx/sites folder
+
+server {
+
+    listen 80;
+    listen [::]:80;
+
+    server_name zf2-tutorial.dev;
+    root /var/www/zf2-tutorial;
+    index index.php index.html index.htm;
+
+    location / {
+         try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-upstream;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt/;
+        log_not_found off;
+    }
+
+    error_log /var/log/nginx/zf2-tutorial_error.log;
+    access_log /var/log/nginx/zf2-tutorial_access.log;
+}
+
+```
