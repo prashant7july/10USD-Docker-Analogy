@@ -479,4 +479,5 @@ server {
     access_log /var/log/nginx/zf2-tutorial_access.log;
 }
 
+docker-compose exec workspace bash
 ```
