@@ -484,8 +484,8 @@ docker-compose exec workspace bash
 
 
 # How to setup Multiple Project?
-https://github.com/laradock/laradock/issues/425
-https://github.com/docker/compose/issues/3729
+ * https://github.com/laradock/laradock/issues/425
+ * https://github.com/docker/compose/issues/3729
 
 My problem with your suggestion is that docker-compose.override.yml might not exist (it's an optional file the developer can create locally). I only want to use docker-compose.override.yml to locally customize ports, like this:
 
