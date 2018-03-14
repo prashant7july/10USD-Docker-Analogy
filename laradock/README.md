@@ -508,12 +508,13 @@ services:
             - 32080:80
             - 32443:443
 ```
-This isn't a big deal because this will only result in 80 being exposed twice, once as a random port and once as 32080. I think it would make sense in this case to only expose it as 32080 automatically (without having to specify anything in the override to remove the original config value)
 
+This isn't a big deal because this will only result in 80 being exposed twice, once as a random port and once as 32080. I think it would make sense in this case to only expose it as 32080 automatically (without having to specify anything in the override to remove the original config value)
+```
 $ docker-compose -f docker-compose.override.yml -f docker-compose.dev.yml up
 $ docker-compose -f docker-compose.override.yml -f docker-compose.dev.yml up -d nginx php-fpm mysql phpmyadmin
 $ docker-compose -f docker-compose.dev.yml up -d nginx php-fpm mysql phpmyadmin
-
+```
 I haven't been using the APPLICATION variable for multiple/single project, I've put mine in docker-compose.dev.yml, one line per app. The only point of docker-compose.dev.yml is to keep necessary local changes out of docker-compose.yml so when you git pull to update laradock it doesn't conflict.
 
 #### Folder Structure
