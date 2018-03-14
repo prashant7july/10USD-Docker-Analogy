@@ -526,7 +526,7 @@ I haven't been using the APPLICATION variable for multiple/single project, I've 
 └── laradock
 ```
 
-In docker file - docker-compose.dev.yml
+#### In docker-compose development file - docker-compose.dev.yml
 ```
 version: "2"
 services:
