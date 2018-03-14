@@ -481,3 +481,49 @@ server {
 
 docker-compose exec workspace bash
 ```
+
+
+# How to setup Multiple Project?
+https://github.com/laradock/laradock/issues/425
+https://github.com/docker/compose/issues/3729
+
+My problem with your suggestion is that docker-compose.override.yml might not exist (it's an optional file the developer can create locally). I only want to use docker-compose.override.yml to locally customize ports, like this:
+
+docker-compose.yml:
+
+version: '2'
+services:
+    web:
+        ports:
+            - 80
+            - 443
+        ...
+
+docker-compose.override.yml:
+
+version: '2'
+services:
+    web:
+        ports:
+            - 32080:80
+            - 32443:443
+
+This isn't a big deal because this will only result in 80 being exposed twice, once as a random port and once as 32080. I think it would make sense in this case to only expose it as 32080 automatically (without having to specify anything in the override to remove the original config value)
+
+$ docker-compose -f docker-compose.override.yml -f docker-compose.dev.yml up
+$ docker-compose -f docker-compose.override.yml -f docker-compose.dev.yml up -d nginx php-fpm mysql phpmyadmin
+$ docker-compose -f docker-compose.dev.yml up -d nginx php-fpm mysql phpmyadmin
+
+I haven't been using the APPLICATION variable for multiple/single project, I've put mine in docker-compose.dev.yml, one line per app. The only point of docker-compose.dev.yml is to keep necessary local changes out of docker-compose.yml so when you git pull to update laradock it doesn't conflict.
+
+In docker file - docker-compose.dev.yml
+
+version: "2"
+services:
+
+### Applications Code Container #############################
+
+    applications:
+      volumes:
+        - ../client1/app1/:/var/www/app1
+        - ../client1/app2/:/var/www/app2
