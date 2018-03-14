@@ -516,6 +516,16 @@ $ docker-compose -f docker-compose.dev.yml up -d nginx php-fpm mysql phpmyadmin
 
 I haven't been using the APPLICATION variable for multiple/single project, I've put mine in docker-compose.dev.yml, one line per app. The only point of docker-compose.dev.yml is to keep necessary local changes out of docker-compose.yml so when you git pull to update laradock it doesn't conflict.
 
+#### Folder Structure
+```
+.
+├── client1
+│   ├── api1
+│   └── api2
+├── data
+└── laradock
+```
+
 In docker file - docker-compose.dev.yml
 ```
 version: "2"
