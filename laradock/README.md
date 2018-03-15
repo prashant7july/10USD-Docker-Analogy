@@ -539,3 +539,53 @@ services:
         - ../client1/app1/:/var/www/app1
         - ../client1/app2/:/var/www/app2
 ```
+
+
+# Under Testing Code
+
+```
+.
+├── client1
+│   ├── api1 (url -> api1.loc)
+│   │   └── index.php
+│   └── api2 (url -> api2.loc)
+│       └── index.php
+├── data
+└── laradock
+
+$ chmode 777 -R data/
+$ cd laradock
+$ git clone https://github.com/laradock/laradock.git ./
+$ cp env-example .env
+$ diff -f env-example .env
+c23
+DATA_SAVE_PATH=../data
+.
+c134 135
+NGINX_HOST_HTTP_PORT=8082
+NGINX_HOST_HTTPS_PORT=8082
+.
+c157
+MYSQL_PORT=3307
+.
+c251
+PMA_PORT=8081
+.
+
+Change docker-compose development file - docker-compose.dev.yml
+
+version: "2"
+services:
+
+### Applications Code Container #############################
+
+    applications:
+      volumes:
+        - ../client1/app1/:/var/www/app1
+        - ../client1/app2/:/var/www/app2
+
+
+$ docker-compose -f docker-compose.dev.yml -f up -d nginx php-fpm mysql phpmyadmin
+
+```
+
