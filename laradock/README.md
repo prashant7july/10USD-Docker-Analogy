@@ -547,9 +547,9 @@ services:
 
 .
 ├── client1
-│   ├── api1 (url -> api1.loc)
+│   ├── app1 (url -> app1.loc)
 │   │   └── index.php
-│   └── api2 (url -> api2.loc)
+│   └── app2 (url -> app2.loc)
 │       └── index.php
 ├── data
 └── laradock
@@ -894,13 +894,9 @@ localhost refused to connect.
 sudo sh -c 'echo "127.0.0.1 api1.loc" >> /etc/hosts'
 sudo sh -c 'echo "127.0.0.1 api2.loc" >> /etc/hosts'
 OR
-vi /etc/hosts
+sudo vi /etc/hosts
 
-127.0.0.1:8082 api2.loc
-127.0.0.1:8082 api1.loc
-
-sudo sh -c 'echo "127.0.0.1 example.com" >> /etc/hosts'
-sudo sh -c 'echo "127.0.0.1 test.com" >> /etc/hosts'
-
+127.0.0.1 app2.loc
+127.0.0.1 app1.loc
 ```
 
