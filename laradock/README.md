@@ -521,8 +521,8 @@ I haven't been using the APPLICATION variable for multiple/single project, I've 
 ```
 .
 ├── client1
-│   ├── api1
-│   └── api2
+│   ├── app1
+│   └── app2
 ├── data
 └── laradock
 ```
