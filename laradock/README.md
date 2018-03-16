@@ -554,7 +554,7 @@ services:
 ├── data
 └── laradock
 
-$ chmode 777 -R data/
+$ chmod 777 -R data/
 $ cd laradock
 $ git clone https://github.com/laradock/laradock.git ./
 $ cp env-example .env
