@@ -544,19 +544,15 @@ services:
 # Under Testing Code
 
 ```
-
 .
 ├── client1
-│   ├── app1 (url -> app1.loc)
+│   ├── api1 (url -> http://app1.test:8082)
 │   │   └── index.php
-│   └── app2 (url -> app2.loc)
+│   └── api2 (url -> http://app2.test:8082)
 │       └── index.php
 ├── data
 └── laradock
 
-$ chmod 777 -R data/
-$ cd laradock
-$ git clone https://github.com/laradock/laradock.git ./
 $ cp env-example .env
 $ diff -f env-example .env
 c23
@@ -564,7 +560,7 @@ DATA_SAVE_PATH=../data
 .
 c134 135
 NGINX_HOST_HTTP_PORT=8082
-NGINX_HOST_HTTPS_PORT=8082
+NGINX_HOST_HTTPS_PORT=8443
 .
 c157
 MYSQL_PORT=3307
@@ -573,7 +569,7 @@ c251
 PMA_PORT=8081
 .
 
-Change docker-compose development file - docker-compose.dev.yml
+Modify docker-compose development file - docker-compose.dev.yml
 
 version: "2"
 
@@ -804,21 +800,18 @@ volumes:
 
 $ docker-compose -f docker-compose.dev.yml up -d nginx php-fpm mysql phpmyadmin
 
+$ docker-compose exec workspace bash
 
 $ docker-compose -f docker-compose.dev.yml up -d --force-recreate --build nginx
 
-404 Resolve
-403 Forbidden | nginx
-Set Properly conf file in nginx/sites/
-
-$ cp nginx/sites/default.conf nginx/sites/app1.conf
+Modify nginx/sites/default.conf
 
 server {
 
-    listen 80;
-    listen [::]:80;
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
 
-    server_name app1.loc;
+    server_name app1.test;
     root /var/www/app1;
     index index.php index.html index.htm;
 
@@ -848,7 +841,6 @@ server {
     }
 }
 
-
 $ cp nginx/sites/default.conf nginx/sites/app2.conf
 
 server {
@@ -856,7 +848,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name app2.loc;
+    server_name app2.test;
     root /var/www/app2;
     index index.php index.html index.htm;
 
@@ -886,17 +878,25 @@ server {
     }
 }
 
-Issues:-
-This site can’t be reached
+$ ping app1.test
+ping: unknown host app1.test
 
-localhost refused to connect.
+Means there is an issues in vi /etc/hosts
+$ tail /etc/hosts
+127.0.0.1 app1.text app2.test [Note: app1.text]
 
-sudo sh -c 'echo "127.0.0.1 api1.loc" >> /etc/hosts'
-sudo sh -c 'echo "127.0.0.1 api2.loc" >> /etc/hosts'
-OR
+Modify Code::-
+127.0.0.1 app1.test app2.test
+
 sudo vi /etc/hosts
+127.0.0.1 app1.test app2.test
 
-127.0.0.1 app2.loc
-127.0.0.1 app1.loc
+$ ping app1.test
+PING app1.test (127.0.0.1) 56(84) bytes of data.
+
+How to connect the mysql/phpmyadmin?
+If you want to connect with a tool like mysql workbench or Sequel Pro, you would use port 3307. Internally, docker containers still use the standard port of 3306 so no special setup is needed for phpMyAdmin
+what happens if you go to http://localhost:8081 ? That's where phpMyAdmin should be based on your PMA_PORT variable.
+
 ```
 
