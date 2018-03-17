@@ -1,4 +1,6 @@
 # Project structure:
+[Docker Connecting PHP container to MySQL
+](https://stackoverflow.com/questions/44991743/docker-connecting-php-container-to-mysql)
 https://gitlab.com/jorgediz/laradoc/tree/multiple-projects
 ``` 
 myproject.
