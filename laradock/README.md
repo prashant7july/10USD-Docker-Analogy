@@ -1,7 +1,8 @@
 # Project structure:
-[Docker Connecting PHP container to MySQL
+* [Docker Connecting PHP container to MySQL
 ](https://stackoverflow.com/questions/44991743/docker-connecting-php-container-to-mysql)
-https://gitlab.com/jorgediz/laradoc/tree/multiple-projects
+* [multiple-projects](https://gitlab.com/jorgediz/laradoc/tree/multiple-projects)
+* [docker-compose with php/mysql/phpmyadmin/apache](https://gist.github.com/jcavat/2ed51c6371b9b488d6a940ba1049189b)
 ``` 
 myproject.
 ├── data -> Create a folder for storing various data of the project, such as database file, logs, (chmod -R 0777 data/ to remove issues Service 'mysql' failed to build on fresh install )
