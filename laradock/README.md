@@ -909,9 +909,9 @@ docker rm $(docker ps -aq)
 docker-compose -f docker-compose.dev.yml up -d nginx php-fpm mysql phpmyadmin
 docker-compose -f docker-compose.dev.yml up -d --force-recreate --build nginx
 ```
-URL: http://app1.test:8082/ [app1]
-URL: http://app2.test:8082/ [app2]
-URL: http://localhost:8081/ [PHPMYADMIN]
+* URL: http://app1.test:8082/ [app1]
+* URL: http://app2.test:8082/ [app2]
+* URL: http://localhost:8081/ [PHPMYADMIN]
 
 
 #### Issues:-
