@@ -903,3 +903,70 @@ what happens if you go to http://localhost:8081 ? That's where phpMyAdmin should
 
 ```
 
+```
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker-compose -f docker-compose.dev.yml up -d nginx php-fpm mysql phpmyadmin
+docker-compose -f docker-compose.dev.yml up -d --force-recreate --build nginx
+```
+URL: http://app1.test:8082/ [app1]
+URL: http://app2.test:8082/ [app2]
+URL: http://localhost:8081/ [PHPMYADMIN]
+
+
+#### Issues:-
+#2002 - php_network_getaddresses: getaddrinfo failed: Name does not resolve — The server is not responding (or the local server's socket is not correctly configured)..
+#### Solution
+http://yutaf.github.io/run-phpmyadmin-in-docker-compose/
+https://stackoverflow.com/questions/47037708/cant-login-docker-phpmyadmin-by-message-2002
+
+Set PMA_HOST, PMA_PORT as environment of phpmyadmin in docker-compose.yml to connect separeted mysql container.
+phpMyAdmin's db is not set to 'mysql' or the port is set to 3307 instead of 3306. The MYSQL_PORT variable is only for connecting from the host OS, not between containers
+
+Just add the below variables in the phpMyAdmin container in environment section
+        - PMA_HOST=${PMA_DB_ENGINE}
+        - PMA_PORT=3306
+
+As below:
+```
+phpmyadmin:
+      build: ./phpmyadmin
+      environment:
+        - PMA_ARBITRARY=1
+        - MYSQL_USER=${PMA_USER}
+        - MYSQL_PASSWORD=${PMA_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${PMA_ROOT_PASSWORD}
+        - PMA_HOST=${PMA_DB_ENGINE}
+        - PMA_PORT=3306
+      ports:
+        - "${PMA_PORT}:80"
+      depends_on:
+        - "${PMA_DB_ENGINE}"
+      networks:
+        - frontend
+        - backend
+```
+Alternatively you can grab the IP of all running containers via:
+docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
+```
+<?php
+
+//echo $_SERVER['QUERY_STRING'];
+$servername = "mysql";
+$databasename = "default";
+$username = "default";
+$password = "secret";
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$databasename", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully"; 
+} catch(PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+```
+docker-compose build --no-cache nginx mysql     
+
+
+
