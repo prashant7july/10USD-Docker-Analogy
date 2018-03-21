@@ -1,4 +1,5 @@
 # Project structure:
+* [shell for SQL](https://github.com/prooph/proophessor-do/tree/master/.docker)
 * [15-hints-for-high-quality-php-projects](https://sandro-keil.de/blog/2014/12/03/15-hints-for-high-quality-php-projects/)
 * [PHP Profiler in Docker](https://sandro-keil.de/blog/2016/01/26/docker-for-php-developers/)
 * [PHP GIT for Debug](https://github.com/prooph/docker-files/tree/master/php)
