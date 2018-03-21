@@ -968,5 +968,9 @@ try {
 ```
 docker-compose build --no-cache nginx mysql     
 
-
+```
+docker-compose \
+-f docker-compose.yml \
+-f docker-compose.dev.yml up -d nginx php-fpm mysql phpmyadmin
+```
 
