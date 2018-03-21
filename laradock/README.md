@@ -968,6 +968,26 @@ try {
 ```
 docker-compose build --no-cache nginx mysql     
 
+#### Modify docker-compose.dev.yml and execute as below -
+```
+version: "2"
+services:
+
+### Applications Code Container #############################
+
+    applications:
+      volumes:
+        - ../client1/app1/:/var/www/app1
+        - ../client1/app2/:/var/www/app2
+
+### phpMyAdmin Container ####################################
+
+    phpmyadmin:
+      environment:
+        - PMA_HOST=${PMA_DB_ENGINE}
+        - PMA_PORT=3306
+```
+
 ```
 docker-compose \
 -f docker-compose.yml \
