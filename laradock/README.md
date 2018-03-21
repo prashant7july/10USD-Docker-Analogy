@@ -1,5 +1,7 @@
 # Project structure:
 * [15-hints-for-high-quality-php-projects](https://sandro-keil.de/blog/2014/12/03/15-hints-for-high-quality-php-projects/)
+* [PHP Profiler in Docker](https://sandro-keil.de/blog/2016/01/26/docker-for-php-developers/)
+* [PHP GIT for Debug](https://github.com/prooph/docker-files/tree/master/php)
 * [Docker Connecting PHP container to MySQL
 ](https://stackoverflow.com/questions/44991743/docker-connecting-php-container-to-mysql)
 * [multiple-projects](https://gitlab.com/jorgediz/laradoc/tree/multiple-projects)
