@@ -1,4 +1,5 @@
 # Project structure:
+* [docker VScode](https://github.com/apparena/docker-init)
 * [XDEBUG VS CODE](http://blog.leanote.com/post/gm8300130/Day-51-Docker-VS-code-Xdebug)
 * [shell for SQL](https://github.com/prooph/proophessor-do/tree/master/.docker)
 * [15-hints-for-high-quality-php-projects](https://sandro-keil.de/blog/2014/12/03/15-hints-for-high-quality-php-projects/)
